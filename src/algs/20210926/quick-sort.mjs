@@ -15,19 +15,20 @@ export function quickSort(nums) {
   // * 取出基准值，注意这里改变了数组长度
   const pivotVal = nums.splice(pivotIndex, 1)[0];
 
-  const left = [];
-  const right = [];
+  // 比基准值小的放low，大的放high
+  const low = [];
+  const high = [];
 
   // * 注意数组长度变了，不能用len
   for (let i = 0; i < nums.length; i++) {
     if (nums[i] < pivotVal) {
-      left.push(nums[i]);
+      low.push(nums[i]);
     } else {
-      right.push(nums[i]);
+      high.push(nums[i]);
     }
   }
 
-  return [...quickSort(left), pivotVal, ...quickSort(right)];
+  return [...quickSort(low), pivotVal, ...quickSort(high)];
 }
 
 /**
@@ -56,20 +57,20 @@ export function quickSortByProperty(arrayOfObjects, numericProperty) {
     );
   }
 
-  const left = [];
-  const right = [];
+  const low = [];
+  const high = [];
 
   for (let i = 0; i < arrayOfObjects.length; i++) {
     if (arrayOfObjects[i][numericProperty] < pivot[numericProperty]) {
-      left.push(arrayOfObjects[i]);
+      low.push(arrayOfObjects[i]);
     } else {
-      right.push(arrayOfObjects[i]);
+      high.push(arrayOfObjects[i]);
     }
   }
 
   return [
-    ...quickSortByProperty(left, numericProperty),
+    ...quickSortByProperty(low, numericProperty),
     pivot,
-    ...quickSortByProperty(right, numericProperty),
+    ...quickSortByProperty(high, numericProperty),
   ];
 }

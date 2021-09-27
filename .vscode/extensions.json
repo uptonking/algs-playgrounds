@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "esbenp.prettier-vscode",
+    "aaron-bond.better-comments",
     "mervin.markdown-formatter",
     "streetsidesoftware.code-spell-checker",
     "alefragnani.bookmarks",

@@ -9,7 +9,7 @@ export function selectionSort(nums) {
   for (let i = 0; i < len - 1; i++) {
     let min = i;
 
-    // * 每次循环找出最小值的索引
+    // * 每次循环找出最小值的索引，从前往后找
     for (let j = i; j < len; j++) {
       if (nums[j] < nums[min]) {
         min = j;
