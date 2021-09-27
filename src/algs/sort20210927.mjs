@@ -6,9 +6,18 @@ import {
   checkIsArraySorted,
 } from '../utils/sort-utils.mjs';
 import { quickSortByProperty } from './20210926/quick-sort.mjs';
-import { heapSort } from './20210927/heap-sort.mjs';
-import { mergeSort } from './20210927/merge-sort.mjs';
-import { quickSort } from './20210927/quick-sort.mjs';
+import { heapSort, heapSortRecursively } from './20210927/heap-sort.mjs';
+import {
+  mergeSort,
+  mergeSort3Way,
+  mergeSortInsertForShort,
+  mergeSortRecursively2,
+} from './20210927/merge-sort.mjs';
+import {
+  quickSort,
+  quickSort3Way,
+  quickSortOutOfPlace,
+} from './20210927/quick-sort.mjs';
 import {
   bubbleSort,
   insertionSort,
@@ -52,15 +61,24 @@ function execSortTimer(fn) {
   return result;
 }
 
+// 具有稳定性的算法：insertion, bubble, merge
+
 execSortTimer(baselineFuncReturnOnly);
 execSortTimer(baselineJsArraySort);
 execSortTimer(selectionSort);
 execSortTimer(insertionSort);
 execSortTimer(shellSort);
 execSortTimer(bubbleSort);
+
 execSortTimer(quickSort);
+execSortTimer(quickSortOutOfPlace);
+execSortTimer(quickSort3Way);
 execSortTimer(mergeSort);
+execSortTimer(mergeSortRecursively2);
+execSortTimer(mergeSortInsertForShort);
+execSortTimer(mergeSort3Way);
 execSortTimer(heapSort);
+execSortTimer(heapSortRecursively);
 
 algsMetrics = quickSortByProperty(algsMetrics, 'time');
 

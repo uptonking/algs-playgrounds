@@ -1,8 +1,8 @@
 import {
   binarySearch,
   binarySearchRecursively,
-} from './202109926/binary-search.mjs';
-import { quickSort } from './202109926/quick-sort.mjs';
+} from './binary-search.mjs';
+import { quickSort } from './quick-sort.mjs';
 
 let arr = [
   9, 99, 1, -9, -9.0, -123.1, -123, -999999, 999, 0, 9999, 1, 3, 999999, 0, 7,
