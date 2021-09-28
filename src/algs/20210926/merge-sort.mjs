@@ -38,8 +38,4 @@ function merge(left, right) {
   // 当剩下某个数组较长时，剩下的都是最大值
   return [...tempArr, ...left, ...right];
   // return tempArr.concat(left, right)
-
-  
 }
-
-

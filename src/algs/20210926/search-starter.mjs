@@ -1,7 +1,4 @@
-import {
-  binarySearch,
-  binarySearchRecursively,
-} from './binary-search.mjs';
+import { binarySearch, binarySearchRecursively } from './binary-search.mjs';
 import { quickSort } from './quick-sort.mjs';
 
 let arr = [
