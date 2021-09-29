@@ -22,7 +22,7 @@
     "formatter:check": "npm run formatter -- --check",
     "help": "echo 'exec npm start to view the demo'",
     "lint": "eslint src --ext .ts,.tsx --fix -o eslint-log.log",
-    "start": "node ./src/algs/sort20210927.mjs",
+    "start": "node ./src/algs/sort-testing.mjs",
     "start2": "npm run demo:preact",
     "storybook": "echo 'start-storybook -p 8999 -c .storybook'",
     "test": "cross-env REACT_APP_ENV=react jest --config ./jest.config.js",

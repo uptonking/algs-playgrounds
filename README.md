@@ -10,9 +10,10 @@
   - array contains negative and duplicated values
 
 - 排序算法测试小结
-  - 👍🏻️ Array.prototype.sort官方api效率非常高，推荐使用，实现基于quickSort -> timSort
-  - quickSort一般很快，推荐使用
+  - 👍🏻️ `Array.prototype.sort`官方api效率非常高，推荐使用，实现基于quickSort -> timSort
+  - 较快的排序算法包括 quickSort, heapSort, mergeSort，
   - n越大，一些算法就变得越慢，当n很大时排序时间 bubble > selection > insertion/shell >> merge、quick、heap
+  - 选择合适的比较、排序指标也很重要
 
 - 说明
   - 当n大到20w时，能明显感到计算量变大、用时变长
@@ -38,12 +39,12 @@
 ```shell
 git clone https://github.com/uptonking/algs-playgrounds
 
-node ./src/algs/sort20210927.mjs
+node ./src/algs/sort-testing.mjs
 ```
 
 - view the tests result for 7 sort algorithms in the console
 # notes
--  when generating random array, config in `./src/algs/sort20210927.mjs` can be changed
+-  when generating random array, config in `./src/algs/sort-testing.mjs` can be changed
 
 > testing time for sorting algs is in **nanoseconds**
 

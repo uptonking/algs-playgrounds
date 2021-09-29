@@ -127,3 +127,56 @@ function partition3Way(nums, start, end) {
 
   return [left, right];
 }
+
+/**
+ * 对含有可比较类型属性的对象数组进行就地排序；
+ *
+ * @param {Object[]} objArr 对象数组
+ * @param {string} property 对象中要比较的属性名称
+ * @param {Function=} comparator 比较函数，返回值是数值类型，默认数值相减
+ * @returns 排序后的对象数组
+ */
+export function quickSortByProperty(
+  objArr,
+  property,
+  comparator = (a, b) => a - b,
+) {
+  if (objArr.length <= 1) {
+    return objArr;
+  }
+
+  console.log(';;current-arr, ', objArr);
+
+  const pivotIndex = Math.floor(objArr.length / 2);
+  // 从数组中去掉基准值，并获取这个基准值
+  const pivot = objArr.splice(pivotIndex, 1)[0];
+
+  if (
+    !['number', 'bigint', 'string', 'boolean'].includes(typeof pivot[property])
+  ) {
+    console.log(';;pivot-property: ', pivot, property);
+    console.log(';;typeof pivot[property]: ', typeof pivot[property]);
+    throw new Error(
+      '对象数组排序失败，可排序的属性类型支持number/string/boolean，但实际是： ',
+      typeof pivot[property],
+      '; 需要手动传入第3个参数作为属性值的比较函数',
+    );
+  }
+
+  const low = [];
+  const high = [];
+
+  for (let i = 0; i < objArr.length; i++) {
+    if (comparator(objArr[i][property], pivot[property]) < 0) {
+      low.push(objArr[i]);
+    } else {
+      high.push(objArr[i]);
+    }
+  }
+
+  return [
+    ...quickSortByProperty(low, property, comparator),
+    pivot,
+    ...quickSortByProperty(high, property, comparator),
+  ];
+}

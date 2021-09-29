@@ -1,17 +1,17 @@
-import perfy from '../utils/perfy.mjs';
-import randomArray from '../utils/random-array-generator.mjs';
+import perfy from '../../utils/perfy.mjs';
+import randomArray from '../../utils/random-array-generator.mjs';
 import {
   baselineFuncReturnOnly,
   baselineJsArraySort,
   checkIsArraySorted,
-} from '../utils/sort-utils.mjs';
-import { bubbleSort } from './20210926/bubble-sort.mjs';
-import { heapSort, heapSortRecursively } from './20210926/heap-sort.mjs';
-import { insertionSort } from './20210926/insertion-sort.mjs';
-import { mergeSort } from './20210926/merge-sort.mjs';
-import { quickSort, quickSortByProperty } from './20210926/quick-sort.mjs';
-import { selectionSort } from './20210926/selection-sort.mjs';
-import { shellSort } from './20210926/shell-sort.mjs';
+} from '../../utils/sort-utils.mjs';
+import { bubbleSort } from './bubble-sort.mjs';
+import { heapSort, heapSortRecursively } from './heap-sort.mjs';
+import { insertionSort } from './insertion-sort.mjs';
+import { mergeSort } from './merge-sort.mjs';
+import { quickSort, quickSortByProperty } from './quick-sort.mjs';
+import { selectionSort } from './selection-sort.mjs';
+import { shellSort } from './shell-sort.mjs';
 
 /** 测试用例: 浮点数、负值元素、较大极值; */
 const arr2 = [

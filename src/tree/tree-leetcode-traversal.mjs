@@ -22,6 +22,7 @@ import { BinaryTree, printTree, printTree2 } from './utils/tree-print.mjs';
  */
 export function buildTree(preorder, inorder) {
   if (preorder.length !== inorder.length || inorder.length === 0) {
+    // * 这里返回的是null，会作为空的left/right，不可以返回[]
     return null;
   }
 

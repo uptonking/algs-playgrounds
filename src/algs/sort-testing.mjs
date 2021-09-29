@@ -5,25 +5,25 @@ import {
   baselineJsArraySort,
   checkIsArraySorted,
 } from '../utils/sort-utils.mjs';
-import { quickSortByProperty } from './20210926/quick-sort.mjs';
-import { heapSort, heapSortRecursively } from './20210927/heap-sort.mjs';
+import { heapSort, heapSortRecursively } from './sorting/heap-sort.mjs';
 import {
   mergeSort,
   mergeSort3Way,
   mergeSortInsertForShort,
   mergeSortRecursively2,
-} from './20210927/merge-sort.mjs';
+} from './sorting/merge-sort.mjs';
 import {
   quickSort,
   quickSort3Way,
+  quickSortByProperty,
   quickSortOutOfPlace,
-} from './20210927/quick-sort.mjs';
+} from './sorting/quick-sort.mjs';
 import {
   bubbleSort,
   insertionSort,
   selectionSort,
   shellSort,
-} from './20210927/sort-inefficient.mjs';
+} from './sorting/sort-inefficient.mjs';
 
 /** 测试用例: 浮点数、负值元素、较大极值; */
 const arr2 = [
