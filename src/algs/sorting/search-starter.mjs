@@ -20,7 +20,7 @@ export function binarySearch(nums, target) {
   return 'not-found';
 }
 
-export function binarySearchRecursively(nums, target, low, high) {
+export function binarySearchRecursive(nums, target, low, high) {
   if (low === undefined) {
     low = 0;
   }

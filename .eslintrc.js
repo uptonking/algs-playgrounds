@@ -91,6 +91,7 @@ module.exports = {
     '@typescript-eslint/no-invalid-void-type': 1,
     '@typescript-eslint/no-inferrable-types': 0,
     '@typescript-eslint/no-parameter-properties': 1,
+    '@typescript-eslint/no-this-alias': 1,
     '@typescript-eslint/ban-types': 1,
     '@typescript-eslint/prefer-for-of': 0,
     '@typescript-eslint/prefer-optional-chain': 0,
