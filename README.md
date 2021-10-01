@@ -4,7 +4,7 @@
 
 # overview
 - my test case
-  - environment: node v14.15.1
+  - environment: node v14.15.1; ubuntu 20.04
   - auto-generated array of random numbers
   - `array.length` is 20000 / 200000
   - array contains negative and duplicated values
@@ -13,12 +13,12 @@
   - 👍🏻️ `Array.prototype.sort`官方api效率非常高，推荐使用，实现基于quickSort -> timSort
   - 较快的排序算法包括 quickSort, heapSort, mergeSort，
   - n越大，一些算法就变得越慢，当n很大时排序时间 bubble > selection > insertion/shell >> merge、quick、heap
-  - 选择合适的比较、排序指标也很重要
 
 - 说明
   - 当n大到20w时，能明显感到计算量变大、用时变长
      - 此时heapSort甚至比官方的array.sort还要快
-     - heapSort循环版快于递归版
+     - 循环版一般快于递归版
+  - 选择合适的比较/排序指标也很重要
 
 - common sort algorithms ing
   - [x] selectionSort

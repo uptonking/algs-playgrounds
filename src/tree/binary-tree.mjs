@@ -1,3 +1,7 @@
+// * 二叉树遍历小结
+// * - 二叉树的前中后序深度优先遍历都基于stack，访问元素都使用 stack.pop()，只有后序遍历将访问结果unshift插入结果数组的第一个
+// * - 二叉树的层序遍历基于queue，访问元素使用 queue.shift()
+
 /**
  * Definition for a binary tree node.
  * @param {*=} val 树节点中保存的内容
@@ -180,6 +184,7 @@ export function nodesByLevel(root) {
       // * 每次移除并访问queue中的第1个元素
       current = queue.shift();
       level.push(current.val);
+
       current.left && queue.push(current.left);
       current.right && queue.push(current.right);
     }

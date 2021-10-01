@@ -14,10 +14,12 @@ export function heapSort(nums) {
 
   // 以数组存储的完全二叉树，索引i对应的父节点索引为(i-1)/2
   // 数组最后一个元素索引为i-1，所以其父节点索引为 (i-1-1)/2 = i/2 - 1
+  // * 从最后一个非叶子从后往前构建大顶堆，i--
   for (let i = Math.floor(len / 2 - 1); i >= 0; i--) {
     heapifyMax(nums, i, len);
   }
 
+  // * 每次交换第一个和最后一个未排序的元素，j--
   for (let j = len - 1; j >= 0; j--) {
     swap(nums, 0, j);
     // j可以代表本轮未排序元素个数

@@ -1,3 +1,13 @@
+// 实现js原声api的功能
+// eslint-disable-next-line no-extend-native
+Array.prototype.fn = function (fn, context) {
+  const arr = this;
+
+  return arr.reduce((prev, curr) => {
+    return prev.concat(fn.call(context, curr));
+  }, []);
+};
+
 // * 实现 arr.reduce((prev, curr, index, array) => { ... }, initialValue)
 
 // eslint-disable-next-line no-extend-native
@@ -35,6 +45,15 @@ Array.prototype.map2 = function (fn, thisArgs) {
 
 // eslint-disable-next-line no-extend-native
 Array.prototype.map3 = function (fn, context) {
+  const arr = this;
+
+  return arr.reduce((prev, curr) => {
+    return prev.concat(fn.call(context, curr));
+  }, []);
+};
+
+// eslint-disable-next-line no-extend-native
+Array.prototype.unshift2 = function (fn, context) {
   const arr = this;
 
   return arr.reduce((prev, curr) => {

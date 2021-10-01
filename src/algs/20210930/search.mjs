@@ -7,7 +7,7 @@ export function binarySearchRecursive(nums, target, low, high) {
     high = nums.length - 1;
   }
 
-  // 若参数数组只有1个元素，也应该执行比较，所以这里不能为=
+  // * 若参数数组只有1个元素，也应该执行比较，所以这里不能为=
   if (low > high) return -1;
 
   const mid = Math.floor((low + high) / 2);

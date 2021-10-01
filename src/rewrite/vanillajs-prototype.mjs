@@ -1,5 +1,10 @@
 // 测试用例
+
 // * 组合式继承
+// https://juejin.cn/post/6844903569317953543
+// 本方法很明显执行了两次父类的构造函数
+// 子类仍旧无法传递动态参数给父类！
+// 父类的构造函数被调用了两次。
 
 function Parent1() {
   this.superName = 'su';
@@ -20,18 +25,31 @@ const chd1 = new Child1();
 console.log('chd1, ', chd1);
 
 // * 寄生组合式继承
+// 子类继承了父类的属性和方法，同时属性没有被创建在原型链上，因此多个子类不会共享同一个属性。
+// 子类可以传递动态参数给父类！
+// 父类的构造函数只执行了一次！
+// 但是 子类想要在原型上添加方法，必须在继承之后添加，否则将覆盖掉原有原型上的方法。
 
+/** 类似Object.create, 可以不用创建父类，直接利用已有实例作为模板 */
 function object(o) {
   function F() {}
   F.prototype = o;
   return new F();
 }
-function inheritPrototype(subType, superType) {
-  const prototype = object(superType.prototype);
-  prototype.constructor = subType;
-  subType.prototype = prototype;
+function inheritPrototype(child, parent) {
+  // 继承父类原型对象
+  const p = object(parent.prototype);
+  // 重写子类的原型对象
+  child.prototype = p;
+  // 将父类原型和子类原型合并，并赋值给子类的原型，实现允许在子类原型上添加新方法
+  // copy原型链上可枚举的方法，如果子类本身已经继承自某个类，仍不能满足要求。
+  // child.prototype = Object.assign(p, child.prototype);
+
+  // 更新构造函数的指向
+  p.constructor = child;
 }
 
+//
 inheritPrototype(Child1, Parent1);
 const chd2 = new Child1();
 console.log('chd2, ', chd2);
@@ -70,6 +88,7 @@ function _objectCreate(o) {
 
 /**
  * * 判断A的原型链上是否有B的原型
+ * 思路是 在a的原型链a.__proto__上查找 b.prototype
  */
 function _instanceof(a, b) {
   const bPrototype = b.prototype;
@@ -96,9 +115,11 @@ function _instanceof(a, b) {
  * 5. 如果构造函数返回非空对象，则返回该对象，否则返回第1步创建的对象
  */
 function _newObjectFactory(constructor, ...args) {
-  // let obj = new Object();
+  // eslint-disable-next-line no-new-object
+  const obj = new Object();
+  // const obj = Object.create(constructor.prototype);
+  Object.setPrototypeOf(obj, constructor.prototype);
 
-  const obj = Object.create(constructor.prototype);
   const temp = constructor.apply(obj, args);
 
   if (temp && ['object', 'function'].includes(typeof temp)) {
@@ -128,9 +149,8 @@ Function.prototype.call2 = function (context) {
 /**
  * 实现apply
  */
-
 // eslint-disable-next-line no-extend-native
-Function.prototype.call2 = function (context) {
+Function.prototype.apply2 = function (context) {
   context = context || window;
   context.fn = this;
 
