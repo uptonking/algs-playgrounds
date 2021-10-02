@@ -1,12 +1,7 @@
 // * 数组扁平化
 
+/** 基于队列 */
 function flatten(arr) {
-  return [].concat(
-    ...arr.map((item) => (Array.isArray(item) ? flatten(item) : item)),
-  );
-}
-
-function flatten2(arr) {
   const queue = [...arr];
 
   const result = [];
@@ -23,6 +18,34 @@ function flatten2(arr) {
   }
 
   return result;
+}
+
+function flatten1(input) {
+  const stack = [...input];
+  const res = [];
+  while (stack.length) {
+    // pop value from stack
+    const next = stack.pop();
+    if (Array.isArray(next)) {
+      // push back array items, won't modify the original input
+      stack.push(...next);
+    } else {
+      res.push(next);
+    }
+  }
+  // reverse to restore input order
+  return res.reverse();
+}
+
+function flatten2(arr) {
+  return arr.flatten(Infinity);
+}
+
+/** 基于递归实现 */
+function flatten3(arr) {
+  return [].concat(
+    ...arr.map((item) => (Array.isArray(item) ? flatten(item) : item)),
+  );
 }
 
 const numbers = [1, [2, [3, 4], 5], 4, 3, 2, 1];

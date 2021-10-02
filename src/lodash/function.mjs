@@ -82,6 +82,11 @@ function curry(func) {
   };
 }
 
+function compose(...fns) {
+  return (initialVal) =>
+    fns.reduceRight((fn1, fn2) => fn2(fn1), initialVal);
+}
+
 /** [m,n] */
 function randomInRange(min, max) {
   return Math.round(Math.random() * (max - min) + min);

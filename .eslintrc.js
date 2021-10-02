@@ -45,6 +45,7 @@ module.exports = {
     'no-inner-declarations': 1,
     'no-promise-executor-return': 1,
     'no-eq-null': 1,
+    'no-sparse-arrays':1,
     eqeqeq: 1,
     'one-var': 1,
     'guard-for-in': 1,

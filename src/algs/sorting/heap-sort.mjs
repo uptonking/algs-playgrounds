@@ -81,3 +81,39 @@ function heapifyMaxRecursively(nums, i, heapSize) {
     heapifyMaxRecursively(nums, largest, heapSize);
   }
 }
+
+/**
+ * * 基于小顶堆求最小的k个数。
+ * - 当k为arr长度时，可以得到逆序数组
+ */
+function heapSortMin(arr, k) {
+  if (k === 0) return [];
+  const len = arr.length;
+  if (len <= 1) return arr;
+
+  for (let i = Math.floor(len / 2 - 1); i >= 0; i--) {
+    heapifyMin(arr, i, len);
+  }
+
+  for (let j = len - 1; j >= len - k; j--) {
+    swap(arr, 0, j);
+    heapifyMin(arr, 0, j);
+  }
+
+  return arr.slice(-k).reverse();
+}
+
+function heapifyMin(arr, i, heapSize) {
+  for (let j = 2 * i + 1; j < heapSize; j = 2 * j + 1) {
+    if (j + 1 < heapSize && arr[j] > arr[j + 1]) {
+      j++;
+    }
+
+    if (arr[i] > arr[j]) {
+      swap(arr, i, j);
+      i = j;
+    } else {
+      break;
+    }
+  }
+}
