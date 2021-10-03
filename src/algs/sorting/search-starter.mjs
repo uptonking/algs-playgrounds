@@ -47,5 +47,3 @@ export function binarySearchRecursive(nums, target, low, high) {
 const arr = [6, 4, -3, 0, 1, 6, 3, 0, -1];
 
 console.log(binarySearch(quickSort(arr), -1));
-
-

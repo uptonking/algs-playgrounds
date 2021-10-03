@@ -27,7 +27,7 @@ function createStore1(reducer, preloadedState, enhancer) {
   dispatch({ type: '@@redux/INIT' });
 
   return {
-    state,
+    getState,
     dispatch,
     subscribe,
   };
@@ -43,10 +43,11 @@ function compose(...funcs) {
     return funcs[0];
   }
 
+  // 每一次循环都会创建并返回一个新的函数
   return funcs.reduce(
-    (next, cur) =>
+    (prev, curr) =>
       (...args) =>
-        next(cur(...args)),
+        prev(curr(...args)),
   );
 }
 

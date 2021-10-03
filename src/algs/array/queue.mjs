@@ -68,7 +68,6 @@ function maxSlidingWindow2(nums, k) {
   return result;
 }
 
-
 /**
- * 
+ *
  */

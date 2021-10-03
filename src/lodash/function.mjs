@@ -6,6 +6,7 @@ function debounce(fn, wait, options = {}) {
   return (...args) => {
     // 重新计时
     if (timer) clearTimeout(timer);
+
     timer = setTimeout(() => {
       fn.apply(this, args);
     }, wait);
@@ -16,7 +17,9 @@ function throttle(fn, wait, options) {
   let timer;
 
   return (...args) => {
+    // 若已存在计时器，则暂不执行
     if (timer) return;
+
     timer = setTimeout(() => {
       fn.apply(this, args);
       timer = null;
@@ -83,8 +86,7 @@ function curry(func) {
 }
 
 function compose(...fns) {
-  return (initialVal) =>
-    fns.reduceRight((fn1, fn2) => fn2(fn1), initialVal);
+  return (initialVal) => fns.reduceRight((fn1, fn2) => fn2(fn1), initialVal);
 }
 
 /** [m,n] */

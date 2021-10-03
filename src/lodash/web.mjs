@@ -69,3 +69,29 @@ function jsonp(url, params, callback) {
 
   document.appendChild(script);
 }
+
+/**
+ * * 手写 axios
+ * https://github.com/sisterAn/JavaScript-Algorithms/issues/104
+ */
+
+```js
+axios({
+  method:'get',
+  url:'http://bit.ly/2mTM3nY',
+  responseType:'stream'
+})
+  .then(function(response) {
+  response.data.pipe(fs.createWriteStream('ada_lovelace.jpg'))
+});
+
+
+axios.get('/api/user', {
+  cancelToken: source.token
+}).catch(function(thrown) {
+  if (axios.isCancel(thrown)) {
+    console.log('请求撤销了', thrown.message);
+  } else {
+  }
+});
+```;
