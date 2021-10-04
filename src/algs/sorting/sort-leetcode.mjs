@@ -2,9 +2,9 @@
  * * 洗牌算法。打乱数组。
  * - Fisher-Yates 洗牌算法，
  *   - 时间复杂度： O(n) 空间复杂度：O(n)
- *   - 基本思想就是从原始数组中随机取一个之前没取过的数字到新的数组中
+ *   * 基本思想就是从原始数组中随机取一个之前没取过的数字到新的数组中
  * - Knuth-Durstenfeld shuffle
- *    - 在Fisher 等人的基础上对算法进行了改进，在原始数组上对数字进行交互，省去了额外O(n)的空间
+ *   - 在Fisher 等人的基础上对算法进行了改进，在原始数组上对数字进行交互，省去了额外O(n)的空间
  * https://leetcode-cn.com/problems/shuffle-an-array/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/74
  * https://leetcode-cn.com/problems/shuffle-an-array/solution/jing-dian-xi-pai-suan-fa-fisher-yates-shufflesuan-/
@@ -13,7 +13,6 @@
  * 可用来实现音乐随机播放。
  *
  */
-
 const Solution = function (nums) {
   this.nums = nums;
 };
@@ -29,7 +28,7 @@ Solution.prototype.shuffle = function () {
   const res = [...this.nums];
   const len = res.length;
 
-  // 最后一位开始往前遍历。每次循环生成随机数
+  // * 相当于每次随机取一个元素，放到数组末尾，尾部元素都是乱序的
   for (let i = len - 1; i >= 0; i--) {
     const randIndex = Math.floor(Math.random() * (i + 1));
     swap(res, randIndex, i);

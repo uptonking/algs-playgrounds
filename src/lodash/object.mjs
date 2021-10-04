@@ -35,6 +35,7 @@
  */
 function cloneDeep(value) {
   // 用来解决循环引用的问题，扁平化地保存所有拷贝过的对象的引用
+  // ! 必须使用Map或双数组，不能用{}; The keys of an Object must be either a String or a Symbol.
   const copied = {};
 
   function _cloneDeep(value) {
