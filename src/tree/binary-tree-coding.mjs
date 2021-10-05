@@ -26,7 +26,40 @@ export function kthSmallest(root, k) {
   }
 }
 
-/** 二叉树转链表。展开后的单链表应该与二叉树 先序遍历 顺序相同。
+/**
+ * * 另一棵树的子树
+ * https://leetcode-cn.com/problems/subtree-of-another-tree/
+ * - 如果一棵二叉树t是另一颗二叉树s的子树，那么有3种情况
+ * - 1. s和t完全一样
+ * - 2. t在s的左子树中（递归）
+ * - 3. t在s的右子树中（递归）
+ */
+
+function isSubtree(root, subRoot) {
+  if (!root) return false;
+
+  // 值相等后再去判断，可以减少计算
+  if (root.val === subRoot.val && isSameTree(root, subRoot)) {
+    return true;
+  }
+
+  return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+}
+
+/**
+ * * 判断2棵树val完全相同
+ */
+function isSameTree(root1, root2) {
+  if (!root1 && !root2) return true;
+  if (!root1 || !root2 || root1.val !== root2.val) return false;
+
+  return (
+    isSameTree(root1.left, root2.left) && isSameTree(root1.right, root2.right)
+  );
+}
+
+/**
+ * * 二叉树转链表。展开后的单链表应该与二叉树 先序遍历 顺序相同。
  * https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/submissions/
  * https://blog.voyz.vip/2020/12/31/LeetCode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0-Day54/
  *

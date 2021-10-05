@@ -5,24 +5,78 @@
  * and returns a single Promise that resolves to an array of the results of the input promises.
  * It rejects immediately upon any of the input promises rejecting or non-promises throwing an error
  */
-Promise2.all = (promises) => {
+Promise.all1 = (promises) => {
   return new Promise2((resolve, reject) => {
     const result = [];
     let resolvedCount = 0;
 
     for (let i = 0; i < promises.length; i++) {
-      Promise.resolve(promises[i]).then((value) => {
-        resolvedCount++;
-        result[i] = value;
+      const promise = promises[i];
+      promise.then(
+        (response) => {
+          result[i] = response;
+          resolvedCount++;
 
-        // 全部
-        if (resolvedCount === promises.length) {
-          resolve(result);
-        }
-      }, reject);
+          // 当返回结果为最后一个时
+          if (resolvedCount === promises.length) {
+            resolve(result);
+          }
+        },
+        (error) => {
+          reject(error);
+        },
+      );
+
+      // Promise.resolve(promises[i]).then((value) => {
+      //   resolvedCount++;
+      //   result[i] = value;
+
+      //   // 全部
+      //   if (resolvedCount === promises.length) {
+      //     resolve(result);
+      //   }
+      // }, reject);
     }
   });
 };
+
+Promise.allSettled1 = function (promises) {
+  return new Promise((resolve, reject) => {
+    const result = [];
+    const len = promises.length;
+    let count = len;
+
+    for (let i = 0; i < len; i += 1) {
+      const promise = promises[i];
+
+      promise
+        .then(
+          (res) => {
+            result[i] = { status: 'fulfilled', value: res };
+          },
+          (error) => {
+            result[i] = { status: 'rejected', reason: error };
+          },
+        )
+        .finally(() => {
+          // 全部执行完了，才会执行resolve
+          if (!--count) {
+            resolve(result);
+          }
+        });
+    }
+  });
+};
+
+const promise1 = Promise.resolve(3);
+const promise2 = new Promise((resolve, reject) =>
+  setTimeout(reject, 1500, 'foo'),
+);
+const promises = [promise2, promise1];
+
+Promise.allSettled1(promises).then((results) =>
+  results.forEach((result) => console.log(result)),
+);
 
 /**
  * * Promise.race
@@ -110,6 +164,23 @@ Promise.allSettled2 = function (promises) {
     }
   });
 };
+
+const p1 = Promise.resolve(1);
+const p2 = Promise.resolve(2);
+const p3 = Promise.reject(0);
+
+Promise.allSettled2([p1, p2, p3])
+  .then(
+    (data) => {
+      console.log('resolve:', data);
+    },
+    (err) => {
+      console.log('then 中 reject:', err);
+    },
+  )
+  .catch((err) => {
+    console.log('catch 中 reject:', err);
+  });
 
 // * --------------- promise的实现和使用/手写promise ---------------
 

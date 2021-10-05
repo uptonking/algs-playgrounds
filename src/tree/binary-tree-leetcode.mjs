@@ -15,8 +15,8 @@ printTree2(new BinaryTree(root0));
 console.log(';;manual-root0: ', root0);
 
 /**
- * AVL树是指左右子树深度差不超过1的二叉树；
- * 思路： 自顶向下的比较每个节点的左右子树的最大高度差，如果二叉树中每个节点的左右子树最大高度差
+ * * AVL树是指左右子树深度差不超过1的二叉树；
+ * 思路：自顶向下的比较每个节点的左右子树的最大高度差，如果二叉树中每个节点的左右子树最大高度差
  * 小于等于 1 ，即每个子树都平衡时，此时二叉树才是平衡二叉树
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/44
  */
@@ -39,7 +39,7 @@ export function isBalanced(root) {
 }
 
 /**
- * 给定一个二叉树，找出其最大深度。
+ * * 给定一个二叉树，找出其最大深度。
  * 深度为根节点到最远叶子节点的最长路径上的节点数。
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/42
  * https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/
@@ -53,7 +53,7 @@ export function maxDepth(root) {
 }
 
 /**
- * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先
+ * * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先
  * https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/43
  */
@@ -70,7 +70,7 @@ export function lowestCommonAncestor(root, p, q) {
 }
 
 /**
- * 给定一个二叉树, 找到该树中两个指定节点间的最短距离。
+ * * 给定一个二叉树, 找到该树中两个指定节点间的最短距离。
  * 思路：a.找到最近公共祖先lca节点； b.分别求出两节点到lca的距离； c.
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/82
  */
@@ -109,7 +109,7 @@ export function getPath(root, node, paths) {
 }
 
 /**
- * 给定一个二叉树，检查它是否是镜像对称的
+ * * 给定一个二叉树，检查它是否是镜像对称的
  * https://leetcode-cn.com/problems/symmetric-tree/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/53
  * 比较二叉树的 前序遍历 和 对称前序遍历 来判断是不是对称的。
@@ -129,7 +129,7 @@ export function isSymmetric(root) {
 }
 
 /**
- * 翻转二叉树。二叉树的左右子树交换
+ * * 翻转二叉树。二叉树的左右子树交换
  * 从根节点开始依次遍历每个节点，然后交换左右子树既可
  * https://leetcode-cn.com/problems/invert-binary-tree/
  */
@@ -152,15 +152,13 @@ console.log(';;invertedTree ');
 printTree2(new BinaryTree(invertedTree));
 
 /**
- * 给定一个二叉树和一个目标和，判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和。
+ * * 给定一个二叉树和一个目标和，判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和。
  *
  * https://leetcode-cn.com/problems/path-sum/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/45
  */
 export function hasPathSum(root, targetSum) {
-  if (!root) {
-    return false;
-  }
+  if (!root) return false;
 
   if (root.left === null && root.right === null) {
     return root.val === targetSum;

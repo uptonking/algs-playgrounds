@@ -1,4 +1,36 @@
 /**
+ * * 斐波那契数列 fibonacci
+ * https://leetcode-cn.com/problems/fibonacci-number/
+ */
+function fibonacci(n) {
+  // 处理 0、1
+  if (n < 2) return n;
+
+  // 记录前2个数
+  let n1 = 0;
+  let n2 = 1;
+
+  let curr = 0;
+
+  for (let i = 2; i < n + 1; i++) {
+    curr = n1 + n2;
+    n1 = n2;
+    n2 = curr;
+  }
+
+  return curr;
+}
+
+function fibonacciRecursive(n) {
+  if (n < 0) return -1;
+
+  // 处理 0、1
+  if (n < 2) return n;
+
+  return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
+}
+
+/**
  * * 分割数组为连续子序列
  * https://leetcode-cn.com/problems/split-array-into-consecutive-subsequences/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/117

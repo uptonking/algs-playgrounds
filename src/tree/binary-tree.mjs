@@ -17,6 +17,21 @@ export function TreeNode(val, left, right) {
   this.right = right === undefined ? null : right;
 }
 
+```JS
+// 遍历模版
+function orderTraversal(root) {
+  if (!root) return [];
+
+  const ret = [];
+
+  return ret;
+}
+
+// 用于基于循环实现的深度优先遍历
+// const stack = [];
+// let curr = root;
+```;
+
 /**
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/87
  */
@@ -32,6 +47,8 @@ export function BinarySearchTree() {
 
 /**
  * 💡️ 前序遍历，递归版
+ * https://leetcode-cn.com/problems/binary-tree-preorder-traversal/
+ * https://github.com/sisterAn/JavaScript-Algorithms/issues/37
  */
 export function preorderTraversal(root) {
   const result = [];
@@ -150,6 +167,28 @@ export function postorderTraversalIterative(root) {
 /**
  * 💡️ 广度优先搜索二叉树，也是层序遍历
  */
+
+function levelorderTraversal(root) {
+  if (!root) return [];
+  const ret = [];
+
+  function levelTree(node, depth) {
+    if (node) {
+      ret[depth] = ret[depth] || [];
+      ret[depth].push(node.val);
+
+      // 注意这里不能是++depth
+      // levelTree(node.left, ++depth);
+      levelTree(node.left, depth + 1);
+      levelTree(node.right, depth + 1);
+    }
+  }
+
+  levelTree(root, 0);
+
+  return ret;
+}
+
 export function levelorderTraversal(root) {
   const result = [];
 
