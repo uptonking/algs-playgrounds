@@ -54,7 +54,7 @@ function removeKey(arr, key) {
 }
 
 /**
- * * 设计一个支持在平均 =时间复杂度 O(1) 下，常数时间插入、删除和获取随机元素
+ * * 设计一个支持在平均时间复杂度O(1)下，常数时间插入、删除和获取随机元素
  */
 
 const RandomizedSet = function () {
@@ -99,6 +99,7 @@ RandomizedSet.prototype.getRandom = function () {
 
 /**
  * * 第一个只出现一次的字符
+ * https://leetcode-cn.com/problems/di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/50
  * 使用 map 两次遍历即可：
  * 遍历字符串，将每个字符的值与出现次数记录到 map 中
@@ -111,6 +112,7 @@ function firstUniqChar(s) {
   const map = {};
 
   for (let i = 0, len = s.length; i < len; i++) {
+    // 出现1次的就是1，再次出现就会变0
     map[s[i]] = map[s[i]] === undefined ? 1 : 0;
   }
 

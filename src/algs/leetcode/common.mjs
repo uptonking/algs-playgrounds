@@ -31,7 +31,7 @@ function fibonacciRecursive(n) {
 }
 
 /**
- * * 分割数组为连续子序列
+ * * 分割数组为连续子序列。每个子序列都由连续整数组成。
  * https://leetcode-cn.com/problems/split-array-into-consecutive-subsequences/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/117
  */

@@ -34,18 +34,10 @@ export function quickSortOutOfPlace(nums) {
  * [用 JavaScript 实现快速排序](https://segmentfault.com/a/1190000037611587)
  */
 export function quickSort(nums, start, end) {
-  // start = start || 0; // ? 这样写为什么有问题
+  if (start === undefined) start = 0;
+  if (end === undefined) end = nums.length - 1;
 
-  if (start === undefined) {
-    start = 0;
-  }
-  if (end === undefined) {
-    end = nums.length - 1;
-  }
-
-  if (start >= end) {
-    return;
-  }
+  if (start >= end) return;
 
   const pivotIndex = partition(nums, start, end);
 

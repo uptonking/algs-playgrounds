@@ -30,28 +30,33 @@ const maxSubArray = function (nums) {
   return max;
 };
 
-const maxSubArray2 = function (nums) {
+function maxSubArray2(nums) {
+  let sum = nums[0];
   let max = nums[0];
-  let sum = 0;
 
-  for (const item of nums) {
-    sum += item;
+  for (let i = 1; i < nums.length; i++) {
+    if (sum > 0) {
+      // 如果之前的的和大于0，那么可以继续累加
+      sum += nums[i];
+    } else {
+      // 否则的话之前是负数，加正数或负数都只小，不如从新的开始
+      sum = nums[i];
+    }
+
     max = Math.max(max, sum);
-    sum = sum < 0 ? 0 : sum;
   }
-
   return max;
-};
+}
 
 /**
  * * 回文子串。回文字符串 是正着读和倒过来读一样的字符串。
- * 计算字符串中有多少个回文子串。
+ * * 计算字符串中有多少个回文子串。
  * https://leetcode-cn.com/problems/palindromic-substrings/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/107
  * 具有不同开始位置或结束位置的子串，即使是由相同的字符组成，也会被视作不同的子串。
  * 暴力法
  */
-const countSubstrings = function (s) {
+function countSubstrings(s) {
   let count = 0;
   for (let i = 0; i < s.length; i++) {
     for (let j = i; j < s.length; j++) {
@@ -61,9 +66,13 @@ const countSubstrings = function (s) {
     }
   }
   return count;
-};
+}
 
-const isPalindrome = function (s) {
+function isPalindrome(s) {
+  if (typeof s !== 'string') return false;
+
+  s = s.replace(/[^0-9a-zA-Z]/g, '').toLocaleLowerCase();
+
   let i = 0;
   let j = s.length - 1;
   while (i < j) {
@@ -71,8 +80,9 @@ const isPalindrome = function (s) {
     i++;
     j--;
   }
+
   return true;
-};
+}
 
 // 中心扩展法
 const countSubstrings2 = function (s) {

@@ -1,5 +1,5 @@
 /**
- * * 翻转字符串里的单词。无空格字符构成一个单词。
+ * * 翻转字符串里的单词(无空格字符构成一个单词)。
  * 输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。
  * 如果两个单词间有多余的空格，将反转后单词间的空格减少到只含一个。
  * https://leetcode-cn.com/problems/reverse-words-in-a-string/
@@ -14,8 +14,65 @@ function reverseWords(s) {
  * * 查找字符串数组中的最长公共前缀。
  * https://leetcode-cn.com/problems/longest-common-prefix/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/19
- * 公共指针法
+ * - 用数组中的第一个字符串作为基准
+ * - 匹配后面每个字符串是否都有公共部分，有就退出循环，没有就继续查找
  */
+
+function longestCommonPrefix(strs) {
+  if (!strs.length) return '';
+  if (strs.length === 1) return strs[0];
+
+  // 取最短的字符串作为基准，也可以简单取第1个字符串作为基准
+  const minLenStr = strs.find(
+    (i) => i.length === Math.min(...strs.map((i) => i.length)),
+  );
+
+  // 从第1个字符开始往后逐次比较
+  let ret = '';
+  for (let i = 0; i < minLenStr.length; i++) {
+    if (
+      strs.every((item) => item.slice(0, i + 1) === minLenStr.slice(0, i + 1))
+    ) {
+      ret = minLenStr.slice(0, i + 1);
+    }
+  }
+  return ret;
+}
+
+function longestCommonPrefix(strs) {
+  if (strs === null || strs.length === 0) return '';
+
+  let ret = strs[0];
+
+  for (let i = 1; i < strs.length; i++) {
+    let j = 0;
+    for (; j < ret.length && j < strs[i].length; j++) {
+      if (ret.charAt(j) !== strs[i].charAt(j)) break;
+    }
+    ret = ret.substring(0, j);
+    if (ret === '') return '';
+  }
+
+  return ret;
+}
+
+// ❌️ 测试未通过 ["dog","racecar","car"]
+function longestCommonPrefix(strs) {
+  if (!strs || strs.length === 0) return '';
+
+  const first = strs[0];
+
+  let result = first;
+  for (let i = 0; i < first.length; i++) {
+    const isOverlap = strs.every((item) => item.indexOf(result) !== -1);
+    if (isOverlap) {
+      break;
+    }
+    result = result.substr(0, first.length - i);
+  }
+
+  return result;
+}
 
 function longestCommonPrefix(strs) {
   if (!strs || !strs.length) {
@@ -44,25 +101,49 @@ function longestCommonPrefix(strs) {
 }
 
 /**
- * 判断输入是不是回文字符串。
+ * * 判断输入是不是回文字符串。
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/20
  */
 
-function isPlalindrome(input) {
-  if (typeof input !== 'string') return false;
-  return input.split('').reverse().join('') === input;
+// 最简单的回文字符串验证，考虑所有字符
+function isPalindrome(s) {
+  if (typeof s !== 'string') return false;
+
+  return s.split('').reverse().join('') === s;
 }
 
-function isPlalindrome2(input) {
-  if (typeof input !== 'string') return false;
+function isPalindrome2(s) {
+  if (typeof s !== 'string') return false;
   let i = 0;
-  let j = input.length - 1;
+  let j = s.length - 1;
   while (i < j) {
-    if (input.charAt(i) !== input.charAt(j)) return false;
+    if (s.charAt(i) !== s.charAt(j)) return false;
     i++;
     j--;
   }
   return true;
+}
+
+function isPalindrome3(s) {
+  s = s.replace(/[^0-9a-zA-Z]/g, '').toLocaleLowerCase();
+}
+
+/**
+ * * 反转字符数组。原地修改。
+ * * 可以抽象为更一般的反转数组。
+ * https://leetcode-cn.com/problems/reverse-string/
+ */
+function reverseString(s) {
+  const len = s.length;
+  const mid = Math.floor(len / 2);
+
+  let temp;
+
+  for (let i = 0; i < mid; i++) {
+    temp = s[i];
+    s[i] = s[len - i - 1];
+    s[len - i - 1] = temp;
+  }
 }
 
 /**
@@ -120,74 +201,3 @@ const lengthOfLongestSubstring3 = function (s) {
   }
   return max;
 };
-
-/**
- * 字符串相加。
- * https://github.com/sisterAn/JavaScript-Algorithms/issues/32
- * 从 num1 ，num2 的尾部开始计算，模拟人工加法，保存到 tmp 中；
- * 计算 tmp 的个位数，并添加到 result 的头部，这里的 result 是 string 类型，不是 number 类型；
- */
-
-function addStrings(num1, num2) {
-  let i = num1.length - 1;
-  let j = num2.length - 1;
-  let move = 0;
-  let result = '';
-
-  let n1;
-  let n2;
-
-  while (i >= 0 || j >= 0) {
-    n1 = i >= 0 ? num1[i] : 0;
-    n2 = j >= 0 ? num2[j] : 0;
-    const tmp = Number(n1) + Number(n2) + move;
-    move = tmp >= 10 ? 1 : 0;
-    result = (tmp % 10) + result;
-    i--;
-    j--;
-  }
-  return move ? move + result : result;
-}
-
-// const addStrings = function (num1, num2) {
-//   let a = num1.length;
-//   let b = num2.length;
-//   let result = '';
-//   let tmp = 0;
-
-//   while (a || b) {
-//     a ? (tmp += Number(num1[--a])) : '';
-//     b ? (tmp += Number(num2[--b])) : '';
-
-//     result = (tmp % 10) + result;
-
-//     if (tmp > 9) tmp = 1;
-//     else tmp = 0;
-//   }
-
-//   if (tmp) result = 1 + result;
-
-//   return result;
-// };
-
-/**
- * 字符串转换整数 (atoi)
- * https://leetcode-cn.com/problems/string-to-integer-atoi/
- * https://github.com/sisterAn/JavaScript-Algorithms/issues/132
- * 如果第一个字符不能转换为数字，parseInt会返回 NaN。
- */
-
-function myAtoi(s) {
-  // parseInt
-  const number = parseInt(s, 10);
-
-  // 判断 parseInt 的结果是否为 NaN，是则返回 0
-  if (isNaN(number)) {
-    return 0;
-  } else if (number < Math.pow(-2, 31) || number > Math.pow(2, 31) - 1) {
-    // 超出
-    return number < Math.pow(-2, 31) ? Math.pow(-2, 31) : Math.pow(2, 31) - 1;
-  } else {
-    return number;
-  }
-}

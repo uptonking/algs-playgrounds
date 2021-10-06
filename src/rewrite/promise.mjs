@@ -31,7 +31,6 @@ Promise.all1 = (promises) => {
       //   resolvedCount++;
       //   result[i] = value;
 
-      //   // 全部
       //   if (resolvedCount === promises.length) {
       //     resolve(result);
       //   }

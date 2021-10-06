@@ -68,18 +68,21 @@ const swap = function (arr, i, j) {
  * 解二：二分查找
  */
 
-const searchRange = function (nums, target) {
+function searchRange(nums, target) {
   let mid;
   let low = 0;
   let high = nums.length - 1;
 
   while (low <= high) {
     mid = Math.floor((low + high) / 2);
+
     if (nums[mid] === target) {
       let start = mid;
       let end = mid;
-      while (nums[start] === target) start--;
-      while (nums[end] === target) end++;
+      while (nums[start] === target)
+        start--;
+      while (nums[end] === target)
+        end++;
 
       return [start + 1, end - 1];
     }
@@ -92,22 +95,4 @@ const searchRange = function (nums, target) {
   }
 
   return [-1, -1];
-};
-
-const searchRange2 = function (nums, target) {
-  let left = 0;
-  let right = nums.length - 1;
-  let start = -1;
-  let end = -1;
-
-  while (left <= right) {
-    if (nums[left] < target) left++;
-    // 找到第一个出现的位置，赋值给start
-    if (nums[left] === target && start === -1) start = left++;
-    if (nums[right] > target) right--;
-    // 找到最后一个出现的位置，赋值给end
-    if (nums[right] === target && end === -1) end = right--;
-    if (start > -1 && end > -1) break;
-  }
-  return [start, end];
-};
+}

@@ -14,11 +14,10 @@ import { BinaryTree, printTree, printTree2 } from './utils/tree-print.mjs';
 // * --------  根据 inorder + pre/post 遍历生成二叉树  -------
 
 /**
- * 根据前序遍历和中序遍历生成二叉树。假设树中没有重复的元素。
+ * * 根据前序遍历和中序遍历生成二叉树。
  * 思路是根据pre-o确定根节点，在in-o遍历中找到该节点，然后递归左右子树。
+ * 假设树中没有重复的元素。
  * https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
- * @param {Array} preorder
- * @param {Array} inorder
  */
 export function buildTree(preorder, inorder) {
   if (preorder.length !== inorder.length || inorder.length === 0) {
@@ -39,7 +38,7 @@ export function buildTree(preorder, inorder) {
 }
 
 /**
- * 根据后序遍历和中序遍历生成二叉树。
+ * * 根据后序遍历和中序遍历生成二叉树。
  * * 注意参数顺序。
  * https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
  */

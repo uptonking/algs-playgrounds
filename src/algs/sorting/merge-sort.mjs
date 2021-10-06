@@ -38,16 +38,10 @@ function merge(left, right) {
 }
 
 export function mergeSortRecursively2(nums, start, end) {
-  if (start === undefined) {
-    start = 0;
-  }
-  if (end === undefined) {
-    end = nums.length - 1;
-  }
+  if (start === undefined) start = 0;
+  if (end === undefined) end = nums.length - 1;
 
-  if (start >= end) {
-    return;
-  }
+  if (start >= end) return;
 
   const mid = Math.floor((start + end) / 2);
 
@@ -97,16 +91,10 @@ function insertSort(nums, start, end) {
  * 这种做法也避免了一些有害的退化情形。摘自《数据结构与算法分析》Mark Allen Weiness 著
  */
 export function mergeSortInsertForShort(nums, start, end) {
-  if (start === undefined) {
-    start = 0;
-  }
-  if (end === undefined) {
-    end = nums.length - 1;
-  }
+  if (start === undefined) start = 0;
+  if (end === undefined) end = nums.length - 1;
 
-  if (start >= end) {
-    return;
-  }
+  if (start >= end) return;
 
   // 当数组较短时，直接使用插入排序原地排序短序列
   if (end - start < 9) {

@@ -1,30 +1,27 @@
+import { TreeNode } from './binary-tree.mjs';
+
 /**
- * * 二叉搜索树中第K小的元素
- * https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/
- * https://github.com/sisterAn/JavaScript-Algorithms/issues/86
- * 中序遍历二叉搜索树，输出第 k 个既可
+ * * 将有序数组转换为二叉搜索树
+ * * 思路：数组中间位置作为根节点，递归构建
+ * https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/
+ *
  */
-export function kthSmallest(root, k) {
-  if (!root) return -1;
+function sortedArrayToBST(nums) {
+  const len = nums.length;
+  if (!nums || len === 0) return null;
 
-  const stack = [];
-  let current = root;
-  let i = 0;
+  if (len === 1) return new TreeNode(nums[0]);
 
-  while (stack.length || current) {
-    while (current) {
-      stack.push(current);
-      current = current.left;
-    }
+  const mid = Math.floor(len / 2);
+  const root = new TreeNode(nums[mid]);
 
-    current = stack.pop();
-    i++;
+  root.left = sortedArrayToBST(nums.slice(0, mid));
+  root.right = sortedArrayToBST(nums.slice(mid + 1));
 
-    if (i === k) return current.val;
-
-    current = current.right;
-  }
+  return root;
 }
+
+
 
 /**
  * * 另一棵树的子树

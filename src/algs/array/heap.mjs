@@ -11,8 +11,6 @@ function swap(nums, i, j) {
  *
  * 动态数组可能会插入或删除元素，难道我们每次求 Top k 问题的时候都需要对数组进行重新排序吗？
  */
-// const newsort = arr.sort((a, b) => a - b)
-// return newsort.slice(0, k)
 
 function getLeastNumbers(arr, k) {
   if (k === 0) return [];

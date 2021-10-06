@@ -22,7 +22,7 @@ function mergeArrays(nums1, m, nums2, n) {
 
 // 非就地合并
 function mergeArrays2(nums1, m, nums2, n) {
-  let temp = [];
+  const temp = [];
   while (nums1.length && nums2.length) {
     if (nums1[0] <= nums2[0]) {
       temp.push(nums1);
@@ -36,7 +36,7 @@ function mergeArrays2(nums1, m, nums2, n) {
 
 // 类似归并排序的归并过程
 function mergeArrays3(nums1, m, nums2, n) {
-  let temp = [];
+  const temp = [];
   const totalSize = m + n;
 
   while (m && n) {
@@ -108,4 +108,29 @@ function getIntersectionOfMultiArr2(...arrs) {
   return arrs.reduce(function (prev, cur) {
     return [...new Set(cur.filter((item) => prev.includes(item)))];
   });
+}
+
+/**
+ * * 合并重叠区间，返回不重叠的区间
+ * https://leetcode-cn.com/problems/merge-intervals/
+ * https://leetcode-cn.com/problems/merge-intervals/solution/fei-chang-tong-yi-li-jie-de-qian-duan-ji-7mmv/
+ */
+function mergeRanges(intervals) {
+  // 先按区间起点大小排序
+  intervals.sort((a, b) => a[0] - b[0]);
+
+  for (let i = 0; i < intervals.length - 1; i++) {
+    // 若前一个区间的终点比后一个区间比后一个区间的起点大，则说明可以合并
+    if (intervals[i][1] >= intervals[i + 1][0]) {
+      const merged = [...intervals[i], ...intervals[i + 1]];
+      const newRange = [Math.min(...merged), Math.max(...merged)];
+
+      intervals.splice(i, 2, newRange);
+
+      // 回退操作，因为刚删了2个又加了1个元素，看看新调整的区间是否可以跟后面的合并
+      i--;
+    }
+  }
+
+  return intervals;
 }

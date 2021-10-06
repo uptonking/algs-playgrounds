@@ -1,5 +1,6 @@
 /**
  * * 有效的括号
+ * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
  * https://leetcode-cn.com/problems/valid-parentheses/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/25
  * 左括号必须用相同类型的右括号闭合。

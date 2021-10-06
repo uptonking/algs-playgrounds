@@ -45,26 +45,26 @@ function heapifyMax(nums, i, heapSize) {
 }
 
 /** heapSort 排序算法模版，递归版 */
-export function heapSortRecursively(nums) {
+export function heapSortRecursive(nums) {
   const len = nums.length;
   if (len <= 1) {
     return nums;
   }
 
   for (let i = Math.floor(len / 2 - 1); i >= 0; i--) {
-    heapifyMaxRecursively(nums, i, len);
+    heapifyMaxRecursive(nums, i, len);
   }
 
   for (let j = len - 1; j > 0; j--) {
     swap(nums, 0, j);
     // j可以代表本轮未排序元素个数
-    heapifyMaxRecursively(nums, 0, j);
+    heapifyMaxRecursive(nums, 0, j);
   }
 
   return nums;
 }
 
-function heapifyMaxRecursively(nums, i, heapSize) {
+function heapifyMaxRecursive(nums, i, heapSize) {
   const left = 2 * i + 1;
   const right = 2 * i + 2;
   let largest = i;
@@ -78,7 +78,7 @@ function heapifyMaxRecursively(nums, i, heapSize) {
 
   if (largest !== i) {
     swap(nums, largest, i);
-    heapifyMaxRecursively(nums, largest, heapSize);
+    heapifyMaxRecursive(nums, largest, heapSize);
   }
 }
 

@@ -1,5 +1,5 @@
 /**
- * 用两个栈实现队列
+ * * 用两个栈实现队列
  * https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/34
  * 双栈可以实现序列倒置
@@ -36,6 +36,7 @@ CQueue.prototype.deleteHead = function () {
  *
  */
 
+// 普通多冲循环会超时
 const maxSlidingWindow = function (nums, k) {
   if (k === 1) return nums;
   let i = 0;

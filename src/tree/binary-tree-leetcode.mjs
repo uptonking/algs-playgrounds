@@ -39,21 +39,71 @@ export function isBalanced(root) {
 }
 
 /**
- * * 给定一个二叉树，找出其最大深度。
+ * * 二叉树的最大深度。
  * 深度为根节点到最远叶子节点的最长路径上的节点数。
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/42
  * https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/
  */
 export function maxDepth(root) {
-  if (!root) {
-    return 0;
-  }
+  if (!root) return 0;
 
   return Math.max(maxDepth(root.left), maxDepth(root.right));
 }
 
+/***
+ * * 二叉树的最小深度。与求最大深度相反
+ * 最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+ * https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/
+ */
+function minDepth(root) {
+  if (!root) return 0;
+
+  // 如果左或右子树为空的话是构不成子树的。而最小深度是要求从根节点到子树的。
+  if (!root.left && root.right) {
+    return 1 + minDepth(root.right);
+  }
+  if (!root.right && root.left) {
+    return 1 + minDepth(root.left);
+  }
+
+  return 1 + Math.min(minDepth(root.left), minDepth(root.right));
+}
+
 /**
- * * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先
+ * * 二叉搜索树的最近公共祖先
+ * * 注意p,q节点大小未知
+ * https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+ *
+ */
+
+function lowestCommonAncestor(root, p, q) {
+  if (!root) return null;
+
+  if (root.val > p.val && root.val > q.val) {
+    return lowestCommonAncestor(root.left, p, q);
+  }
+  if (root.val < p.val && root.val < q.val) {
+    return lowestCommonAncestor(root.right, p, q);
+  }
+
+  return root;
+}
+
+// ❌️ 部分测试未通过
+function lowestCommonAncestor(root, p, q) {
+  // 若root在两值之间
+  if ((root.val - p.val) * (root.val - q.val)) return root;
+
+  if (root.val < p.val) {
+    return lowestCommonAncestor(root.right, p, q);
+  } else {
+    return lowestCommonAncestor(root.left, p, q);
+  }
+}
+
+/**
+ * * 二叉树的最近公共祖先
+ * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先
  * https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/43
  */

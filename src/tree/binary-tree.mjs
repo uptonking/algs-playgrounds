@@ -17,7 +17,6 @@ export function TreeNode(val, left, right) {
   this.right = right === undefined ? null : right;
 }
 
-```JS
 // 遍历模版
 function orderTraversal(root) {
   if (!root) return [];
@@ -30,7 +29,6 @@ function orderTraversal(root) {
 // 用于基于循环实现的深度优先遍历
 // const stack = [];
 // let curr = root;
-```;
 
 /**
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/87
