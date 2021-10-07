@@ -129,6 +129,89 @@ function isPalindrome3(s) {
 }
 
 /**
+ * * 最长回文子串
+ * * 思路: 中心扩展法的核心就是通过找到回文中心，然后以该中心向左右两边扩展来查找。
+ * https://leetcode-cn.com/problems/longest-palindromic-substring/
+ * https://juejin.cn/post/6844903902865784846
+ * https://writings.sh/post/algorithm-longest-palindromic-substring
+ * https://leetcode-cn.com/problems/longest-palindromic-substring/solution/javascriptdui-zhong-xin-kuo-zhan-fa-de-li-jie-by-l/
+ */
+function longestPalindrome(s) {
+  if (!s) return '';
+  if (s.length === 1) return s;
+  if (s.length === 2) return s[0] === s[1] ? s : s[1];
+
+  let maxStr = '';
+  const len = s.length;
+
+  for (let i = 0; i < len; i++) {
+    let even = ''; // 定义偶数中心回文
+    let odd = ''; // 定义奇数中心回文
+
+    if (s[i] === s[i + 1]) {
+      // 若是偶数中心回文，比较中心的前一项和后一项
+      const evenIndex = center(s, i - 1, i + 2);
+      even = s.slice(evenIndex.left, evenIndex.right);
+    }
+
+    // 若是奇数中心回文
+    const oddIndex = center(s, i - 1, i + 1);
+    odd = s.slice(oddIndex.left, oddIndex.right);
+
+    // 比较奇、偶，选择最长的
+    const longer = even.length > odd.length ? even : odd;
+    maxStr = maxStr.length > longer.length ? maxStr : longer;
+  }
+
+  return maxStr;
+}
+
+// 中心扩展
+function center(s, left, right) {
+  const len = s.length;
+  while (left >= 0 && right < len && s[left] === s[right]) {
+    left--;
+    right++;
+  }
+  return { left: left + 1, right: right };
+}
+
+// 动态规划
+function longestPalindromeDp(s) {
+  if (s.length === 1) return s;
+
+  // 创建二阶数组存储从j到i是否是回文数组，0为不回文，1为回文
+  const arr = new Array(s.length).fill([]);
+
+  // 存储最长回文子串的起始位置
+  let begin = 0;
+  // 存储最长子串的长度
+  let max = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    let j = 0;
+    while (j <= i) {
+      // 如果 i-j <= 1 时，说明i位置和j位置要么是重合的，要么是相邻的，即为最后一次查找
+      // 否则继续查询[j + 1]到[i - 1]是否为回文
+      if (s[j] === s[i] && (i - j <= 1 || arr[j + 1][i - 1])) {
+        // 如果符合上述条件，说明j到i是回文
+        arr[j][i] = 1;
+
+        if (i - j + 1 > max) {
+          // 如果当前子串大于存储的子串长度，则替换之
+          begin = j;
+          // 注意+1，比如从3到5的长度为3 = 5 - 3 + 1
+          max = i - j + 1;
+        }
+      }
+
+      j++;
+    }
+  }
+  return s.substr(begin, max);
+}
+
+/**
  * * 反转字符数组。原地修改。
  * * 可以抽象为更一般的反转数组。
  * https://leetcode-cn.com/problems/reverse-string/
@@ -159,15 +242,16 @@ function reverseString(s) {
  * 时间复杂度：O(n2)， 其中 arr.indexOf() 时间复杂度为 O(n) ，arr.splice(0, index+1) 的时间复杂度也为 O(n)
  */
 function lengthOfLongestSubstring(s) {
-  const arr = [];
+  const temp = [];
   let max = 0;
   for (let i = 0; i < s.length; i++) {
-    const index = arr.indexOf(s[i]);
+    const index = temp.indexOf(s[i]);
     if (index !== -1) {
-      arr.splice(0, index + 1);
+      temp.splice(0, index + 1);
     }
-    arr.push(s.charAt(i));
-    max = Math.max(arr.length, max);
+
+    temp.push(s[i]);
+    max = Math.max(temp.length, max);
   }
   return max;
 }

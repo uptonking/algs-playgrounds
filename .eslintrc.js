@@ -47,6 +47,7 @@ module.exports = {
     'no-eq-null': 1,
     'no-sparse-arrays': 1,
     'no-new-object': 1,
+    'no-implicit-coercion':1,
     eqeqeq: 1,
     'one-var': 1,
     'guard-for-in': 1,

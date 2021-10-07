@@ -7,6 +7,28 @@ function ListNode(val, next) {
 }
 
 /**
+ * * 链表中倒数第k个节点
+ * * 思路： 快慢双指针，让第一个先走k步，然后两个指针一起移动，
+ * * 当第一个指针到最后一个节点处，第二个指针就在倒数第K个节点
+ */
+function getKthFromEnd(head, k) {
+  let fast = head;
+  let slow = head;
+
+  while (k !== 0) {
+    fast = fast.next;
+    k--;
+  }
+
+  while (fast !== null) {
+    fast = fast.next;
+    slow = slow.next;
+  }
+
+  return slow;
+}
+
+/**
  *
  * * 删除链表倒数第 n 个结点。
  * 要求在删除了指定节点后，需要返回的是链表的头结点。所以返回的是head。
@@ -129,7 +151,8 @@ function listToArray(head, isValOnly) {
 }
 
 /**
- * * 给定两个用链表表示的整数，每个节点包含一个数位。这些数位是反向存放的。并用链表形式返回结果。
+ * * 两数相加。给定两个用链表表示的整数，每个节点包含一个数位。
+ * * 这些数位是反向存放的。并用链表形式返回结果。
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/114
  */
 function addTwoNumbers(l1, l2) {

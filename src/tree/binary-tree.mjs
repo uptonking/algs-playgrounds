@@ -266,6 +266,63 @@ export function nodesByLevel2(root) {
 }
 
 /**
+ * * 二叉树的锯齿形层序遍历
+ * https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/
+ */
+function zigzagLevelOrder(root) {
+  if (!root || root.length === 0) return [];
+
+  const ret = [];
+
+  const level = (node, depth) => {
+    if (!node) return;
+
+    ret[depth] = ret[depth] || [];
+
+    // 当前层值的访问顺序，第depth层，偶数层正序，奇数层倒序
+    depth % 2 === 0 ? ret[depth].push(node.val) : ret[depth].unshift(node.val);
+
+    level(node.left, depth + 1);
+    level(node.right, depth + 1);
+  };
+
+  level(root, 0);
+
+  return ret;
+}
+
+function zigzagLevelOrder2(root) {
+  if (!root || root.length === 0) return [];
+
+  const ret = [];
+
+  const queue = [root];
+  let curr = root;
+
+  let depth = -1;
+
+  while (queue.length) {
+    const levelArr = [];
+    const levelSize = queue.length;
+
+    depth++;
+
+    for (let i = 0; i < levelSize; i++) {
+      curr = queue.shift();
+
+      depth % 2 === 0 ? levelArr.push(curr.val) : levelArr.unshift(curr.val);
+
+      curr.left && queue.push(curr.left);
+      curr.right && queue.push(curr.right);
+    }
+
+    ret.push(levelArr);
+  }
+
+  return ret;
+}
+
+/**
  * 二叉树的序列化与反序列化
  * https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/
  * * 基于层序遍历实现序列化，空子节点序列化为 #

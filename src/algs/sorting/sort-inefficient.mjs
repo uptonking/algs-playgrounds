@@ -44,6 +44,7 @@ export function insertionSort(nums) {
     return nums;
   }
 
+  // 从索引1开始
   for (let i = 1; i < len; i++) {
     for (let j = i; j > 0 && nums[j] < nums[j - 1]; j--) {
       swap(nums, j, j - 1);
@@ -61,6 +62,7 @@ export function shellSort(nums) {
   }
 
   for (let gap = Math.floor(len / 2); gap >= 1; gap = Math.floor(gap / 2)) {
+    // 从索引gap开始
     for (let i = gap; i < len; i += gap) {
       for (let j = i; j > 0 && nums[j] < nums[j - gap]; j -= gap) {
         swap(nums, j, j - gap);

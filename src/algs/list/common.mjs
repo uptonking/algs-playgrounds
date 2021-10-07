@@ -60,6 +60,59 @@ function reverseList3(head) {
 }
 
 /**
+ * * 反转链表 II 反转从位置 left 到位置 right 的链表节点
+ * https://leetcode-cn.com/problems/reverse-linked-list-ii/
+ * https://xie.infoq.cn/article/f5db6e4a84aef1339e4582d40
+ */
+function reverseBetween(head, left, right) {
+  let prev = null;
+  let curr = head;
+
+  // 将prev和head都移动m-1次，prev在m-1位置，head在m位置
+  while (left > 1) {
+    prev = curr;
+    curr = curr.next;
+
+    // 每次循环将m减1，控制移动次数
+    left--;
+    // 移动指针的同时，需要减少n的数量，完成移动后剩下的n次，即为反转链表的次数
+    right--;
+  }
+
+  const prevListTail = prev; // prev即为链表反转后，前半段的尾指针
+
+  const reversedListTail = curr; // curr即为链表反转后，反转部分的尾指针
+
+  // 将链表反转n次
+  while (right > 0) {
+    // 反转链表节点的通用方法
+    const next = curr.next;
+    curr.next = prev;
+
+    prev = curr;
+    curr = next;
+
+    // 每次循环将n减1，控制移动次数
+    right--;
+  }
+
+  // 如果prevListTail不为空，即为链表中间的一段进行了反转，需要将前半段与反转后的链表头指针连接起来
+  if (prevListTail) {
+    // 链表反转后，prev的位置即为反转部分的头指针
+    prevListTail.next = prev;
+  } else {
+    // 链表未空，表示链表从头开始反转，反转后的prev即为新链表的头，因此需要重新设置链表的头指针
+    head = prev;
+  }
+
+  // 链表反转后，反转部分原来的头，变成了尾部，而curr已加移出了链表，成为了最后一段链表的头指针
+  // 因此需要将反转部分的尾指针与最后一段的头指针连接起来，组成新链表
+  reversedListTail.next = curr;
+
+  return head;
+}
+
+/**
  * * K个一组翻转链表
  * 如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。
  * https://leetcode-cn.com/problems/reverse-nodes-in-k-group/
@@ -188,6 +241,28 @@ function mergeTwoLists2(l1, l2) {
 }
 
 /**
+ * * 合并K个升序链表
+ * * 思路: 两两合并。 采用分治法，简单来说就是不停的对半划分
+ * 给你一个链表数组，每个链表都已经按升序排列。返回合并后的链表。
+ * https://leetcode-cn.com/problems/merge-k-sorted-lists/
+ * https://juejin.cn/post/6844903844971806727
+ */
+function mergeKLists(lists) {
+  let len = lists.length;
+  if (len === 0) return null;
+  if (len === 1) return lists[0];
+
+  while (len > 1) {
+    const k = Math.floor((len + 1) / 2);
+    for (let i = 0; i < Math.floor(len / 2); i++) {
+      lists[i] = mergeTwoLists(lists[i], lists[i + k]);
+    }
+    len = k;
+  }
+  return lists[0];
+}
+
+/**
  * * 链表排序
  * * 类似数组归并排序，先找链表中间节点，然后递归合并
  * https://leetcode-cn.com/problems/sort-list/
@@ -285,6 +360,49 @@ function hasCycleS3(head) {
 }
 
 /**
+ * * 寻找环形链表相交的起点
+ * https://leetcode-cn.com/problems/linked-list-cycle-ii/
+ */
+function detectCycle(head) {
+  // 如果链表为空，或者链表只有一个元素且无环，此时指针无法行动，则返回null
+  if (!head || !head.next) return null;
+
+  // 创建快慢指针
+  let slow = head;
+  let fast = head;
+
+  while (fast && fast.next) {
+    // 慢指针走一步，快指针走两步
+    slow = slow.next;
+    fast = fast.next.next;
+
+    // 如果两个指针的指向相同，则表示已经查找到环。
+    // 但两个指针相遇的节点不一定是环的连接点，而是在环的某个位置
+    if (slow === fast) {
+      break;
+    }
+  }
+
+  // 前面的退出循环条件有两个，一个是没有找到环，一个是找到了环
+  // 通过快慢指针是否相同，判断是否找到环，如果没有，则返回null
+  if (slow !== fast) return null;
+
+  // 如果有环，而且快指针的速度是慢指针的两倍。
+  // 因此如果创建两个指针，从链表起始点和快慢指针相遇节点分别出发。
+  // 两者相遇的节点必然是环的连接点。
+  let startNode = head;
+  let meetNode = fast;
+
+  // 遍历链表，查找连接点，如果两个指针相等，则表示找到连接点。
+  while (startNode !== meetNode) {
+    startNode = startNode.next;
+    meetNode = meetNode.next;
+  }
+
+  return meetNode;
+}
+
+/**
  * * 判断该链表是否为回文链表
  * * 思路：先反转链表，再判断是否相同
  * https://leetcode-cn.com/problems/palindrome-linked-list/
@@ -338,4 +456,47 @@ function isPalindrome(head) {
   }
 
   return str1 === str2;
+}
+
+/**
+ * * 重排链表
+ * https://juejin.cn/post/7002949115776598023
+ */
+ function reorderList(head) {
+  const list = []; // 使用数组存储链表
+  let node = head; // 使用node遍历链表
+
+
+  // 遍历链表，将每个元素依次存入数组
+  while (node) {
+    list.push(node);
+    node = node.next;
+  }
+
+  const newList = []; // 使用新数组，存储新排序的链表节点
+  let i = 0; // 使用i指针从头往后遍历list
+  let j = list.length - 1; // 使用j指针从后往前遍历list
+
+
+  // 左右指针不断向中间移动，知道相遇
+  while (i <= j) {
+    // 将i、j指向的元素，依次存入newList
+    newList.push(list[i++], list[j--]);
+  }
+
+  let newNode = newList[0]; // 缓存新链表的头节点
+
+
+  // newList的每个元素，就是新链表的每个节点
+  for (let i = 1; i < newList.length; i++) {
+    // 将每个节点连接到链表
+    newNode.next = newList[i];
+    // 将新链表节点向后移动一位，待连接下一个节点
+    newNode = newNode.next;
+  }
+  // 将尾节点的next置为null，避免链表出现环
+  newNode.next = null;
+
+  // head也是新链表的头结点
+  return head;
 }
