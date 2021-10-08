@@ -384,3 +384,104 @@ const generateParenthesis = (n) => {
 
   return res;
 };
+
+/***
+ * * 找出这两个有序数组的中位数
+ * * 思路：先排序，再求中间位置的值
+ *
+ * https://leetcode-cn.com/problems/median-of-two-sorted-arrays/
+ * https://github.com/sisterAn/JavaScript-Algorithms/issues/162
+ * https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/4-xun-zhao-liang-ge-zheng-xu-shu-zu-de-zhong-we-40/
+ *
+ */
+function findMedianSortedArrays(nums1, nums2) {
+  if (!nums1.length && !nums2.length) return null;
+
+  // 如果数组1为空
+  if (!nums1.length) {
+    // 若此时数组2仅一个值，那么该值为中位数
+    if (nums2.length === 1) return nums2[0];
+
+    /**
+     * 否则比较数组2，取中位数
+     * 比较单个数组采用二分法
+     */
+    const half = Math.floor(nums2.length / 2);
+    return findMedianSortedArrays(nums2.slice(0, half), nums2.slice(half));
+  }
+
+  // 如果数组2为空，同理
+  if (!nums2.length) {
+    if (nums1.length === 1) return nums1[0];
+
+    const half = Math.floor(nums1.length / 2);
+    return findMedianSortedArrays(nums1.slice(0, half), nums1.slice(half));
+  }
+
+  // 如果两个数组都只剩1个数，取两者中间值
+  if (nums1.length === 1 && nums2.length === 1) {
+    return nums1[0] === nums2[0] ? nums1[0] : (nums1[0] + nums2[0]) / 2;
+  }
+
+  // 比较两个数组的最小值，丢弃最小值
+  nums1[0] < nums2[0] ? nums1.shift() : nums2.shift();
+
+  /**
+   * 这里注意边界值，丢弃最小值后有的数组可能为空
+   */
+  if (!nums1.length) {
+    // 强制丢掉最大值
+    nums2.pop();
+    return findMedianSortedArrays(nums1, nums2);
+  }
+  if (!nums2.length) {
+    nums1.pop();
+    return findMedianSortedArrays(nums1, nums2);
+  }
+
+  // 比较两个数组的最大值，丢弃最大值
+  nums1[nums1.length - 1] > nums2[nums2.length - 1] ? nums1.pop() : nums2.pop();
+  // 重复该操作
+  return findMedianSortedArrays(nums1, nums2);
+}
+
+/**
+ * * 复原 IP 地址
+ * https://leetcode-cn.com/problems/restore-ip-addresses/
+ * 给定一个只包含数字的字符串，用以表示一个 IP 地址，返回所有可能从 s 获得的 有效 IP 地址
+ */
+function restoreIpAddresses(s) {
+  //  判断最大边界
+  if (s.length > 12) return [];
+  // 保存所有符合条件的IP地址
+  const ret = [];
+
+  // 分四步递归处理ip分段
+  const search = (cur, sub) => {
+    // 边界条件，数组长度等于4且组合起来与之前的字符串相等
+    if (cur.length === 4 && cur.join('') === s) {
+      //  过滤 001 010等情况
+      if (cur[3].length > 1 && cur[3][0] === 0) {
+        return false;
+      }
+      ret.push(cur.join('.'));
+    } else {
+      // 正常的处理过程，最多循环三次
+      for (let i = 0, len = Math.min(3, sub.length), tmp; i < len; i++) {
+        tmp = sub.substr(0, i + 1);
+        //  过滤 001 010等情况
+        if (tmp.length > 1 && tmp[0] == 0) {
+          return false;
+        }
+
+        if (tmp < 256) {
+          // 如果当前的数小于 256 说明在 255 范围内，接着递归调用(把不是范围内的排出掉)
+          search(cur.concat([tmp]), sub.substr(i + 1));
+        }
+      }
+    }
+  };
+
+  search([], s);
+  return ret;
+}

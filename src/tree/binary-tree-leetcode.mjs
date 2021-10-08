@@ -223,6 +223,7 @@ export function hasPathSum(root, targetSum) {
  * 给定一个二叉树和一个目标和，找到所有从根节点到叶子节点路径总和等于给定目标和的路径。
  * https://leetcode-cn.com/problems/path-sum-ii/
  * https://github.com/Chocolate1999/leetcode-javascript/issues/54
+ *
  * dfs，进行深度优先遍历，一直遍历到子节点为止，进行一次判断，如果当前 sum为 0 ，那么就是我们想要的结果，
  * 然后注意js语法中形参如果是数组，那么我们拿到的是引用值，可以拷贝一份。
  */
@@ -253,4 +254,67 @@ export function pathSum(root, targetSum) {
   dfs(root, targetSum, []);
 
   return result;
+}
+
+/**
+ * * 二叉树中的最大路径和
+ *
+ * https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/
+ * https://github.com/Chocolate1999/leetcode-javascript/issues/57
+ * https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/solution/shou-hui-tu-jie-hen-you-ya-de-yi-dao-dfsti-by-hyj8/
+ * 路径 被定义为一条从树中任意节点出发，沿父节点-子节点连接，达到任意节点的序列。
+ * 同一个节点在一条路径序列中 至多出现一次 。路径 至少包含一个 节点，且不一定经过根节点。
+ * 路径和 是路径中各节点值的总和。
+ */
+function maxPathSum(root) {
+  let maxSum = Number.MIN_SAFE_INTEGER;
+
+  const dfs = (root) => {
+    if (!root) return 0;
+
+    const left = dfs(root.left); // 左子树提供的最大路径和
+    const right = dfs(root.right); // 右子树提供的最大路径和
+
+    // 当前子树内部的最大路径和
+    const innerMaxSum = left + root.val + right;
+    maxSum = Math.max(maxSum, innerMaxSum); // 挑战最大纪录
+
+    const outputMaxSum = root.val + Math.max(0, left, right); // 当前子树对外提供的最大和
+
+    // 如果对外提供的路径和为负，直接返回0。否则正常返回
+    return outputMaxSum < 0 ? 0 : outputMaxSum;
+  };
+
+  dfs(root); // 递归的入口
+
+  return maxSum;
+}
+
+/**
+ * * 二叉树的直径。
+ * * 思路： 将二叉树的直径转换为：二叉树的每个节点的左右子树的高度和的最大值。
+ * 直径长度是任意两个结点路径长度中的最大值，这条路径可能穿过也可能不穿过根结点
+ * https://leetcode-cn.com/problems/diameter-of-binary-tree/
+ * - root的直径 = root左子树高度 + root右子树高度
+ * - root的高度 = max {root左子树高度, root右子树高度} + 1
+ */
+function diameterOfBinaryTree(root) {
+  let ret = 0;
+
+  const deep = (node) => {
+    if (!node) return 0;
+
+    const left = node.left ? deep(node.left) + 1 : 0;
+    const right = node.right ? deep(node.right) + 1 : 0;
+
+    // 节点直径
+    ret = Math.max(left + right, ret);
+
+    // 子树高度
+    return Math.max(left, right);
+  };
+
+  deep(root);
+
+  return ret;
 }

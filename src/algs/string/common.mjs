@@ -11,7 +11,7 @@ function reverseWords(s) {
 }
 
 /**
- * * 查找字符串数组中的最长公共前缀。
+ * * 查找字符串数组中的最长公共前缀LCP。
  * https://leetcode-cn.com/problems/longest-common-prefix/
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/19
  * - 用数组中的第一个字符串作为基准

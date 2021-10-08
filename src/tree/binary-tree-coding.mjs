@@ -21,8 +21,6 @@ function sortedArrayToBST(nums) {
   return root;
 }
 
-
-
 /**
  * * 另一棵树的子树
  * https://leetcode-cn.com/problems/subtree-of-another-tree/
@@ -127,4 +125,34 @@ function flattenOutOfPlace(root) {
     _pre.left = null;
     _pre.right = _curr;
   }
+}
+
+/**
+ * * 求根到叶子节点数字之和
+ * 树的每个结点都存放一个 0-9 的数字，每条从根到叶子节点的路径都代表一个数字。
+ * https://leetcode-cn.com/problems/sum-root-to-leaf-numbers/
+ * https://github.com/Chocolate1999/leetcode-javascript/issues/43
+ */
+function sumNumbers(root) {
+  let sum = 0;
+
+  const dfs = (root, cur) => {
+    // 终止条件
+    if (!root) return 0;
+
+    // 计算当前节点的值
+    cur = cur * 10 + root.val;
+
+    // 找到一条路径，返回路径和
+    if (!root.left && !root.right) {
+      return cur;
+    }
+
+    // 对左右子树递归，求总和
+    return dfs(root.left, cur) + dfs(root.right, cur);
+  };
+
+  sum = dfs(root, 0);
+
+  return sum;
 }

@@ -244,3 +244,88 @@ function numberToReversedList(num) {
 
   return head;
 }
+
+/**
+ * * 删除排序链表中的重复元素，最终链表可包含重复元素中的一个
+ * https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/
+ * 给你这个链表的头节点 head ，请你删除所有重复的元素，使每个元素 只出现一次 。
+ */
+function deleteDuplicates(head) {
+  if (!head || !head.next) return head;
+
+  head.next = deleteDuplicates(head.next);
+
+  if (head.val === head.next.val) head.next = head.next.next;
+
+  return head;
+}
+
+function deleteDuplicates(head) {
+  if (!head || !head.next) return head;
+
+  let curr = head;
+
+  while (curr && curr.next) {
+    if (curr.val === curr.next.val) {
+      curr.next = curr.next.next;
+    } else {
+      curr = curr.next;
+    }
+  }
+
+  return head;
+}
+
+/**
+ * * 删除排序链表中的重复元素，且最终链表不包含该元素
+ * * 思路主要思路还是双指针，
+ * - prev指针上一个元素，head指针遍历每个元素，当prev和head指向的元素值不同时，两者同时向后移动，
+ * - 当prev和head指向的元素值相同时，此时说明出现重复元素，那么prev指针不动，head指针继续向后搜索直到找到不同的元素，
+ * - 然后修改指针指向，将重复元素段移除。
+ * https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/comments/
+ */
+ function deleteDuplicates(head) {
+  if (!head || !head.next) return head;
+
+  let linkHead = head;
+  let prev = head;
+  head.prev = null;
+  let flag = false;
+
+  while (head.next) {
+    head.next.prev = head;
+    head = head.next;
+
+    if (head.val === prev.val) {
+      if (!flag) {
+        flag = true; // 打开开关，开始寻找下一个值不同的元素
+      }
+    } else {
+      if (flag) {
+        // 找到不同值的元素，修改指针
+        if (!prev.prev) {
+          // 如果重复的是列表头元素
+          linkHead = head;
+          head.prev = null;
+        } else {
+          // 如果重复的元素位于列表中间
+          prev.prev.next = head;
+          head.prev = prev.prev;
+        }
+        flag = false; // 关闭开关，继续寻找相同的元素
+      }
+      prev = head;
+    }
+  }
+
+  if (flag) {
+    // 如果重复元素段在链表尾部
+    if (!prev.prev) {
+      linkHead = null;
+    } else {
+      prev.prev.next = null;
+    }
+  }
+
+  return linkHead;
+}

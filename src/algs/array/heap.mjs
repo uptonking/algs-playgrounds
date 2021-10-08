@@ -67,29 +67,6 @@ function findKthLargest(nums, k) {
   return nums[len - k];
 }
 
-function heapifyMax(nums, i, heapSize, map) {
-  for (let j = 2 * i + 1; j < heapSize; j = 2 * j + 1) {
-    if (j + 1 < heapSize) {
-      if (!map && nums[j] < nums[j + 1]) {
-        j++;
-      }
-
-      if (map && map.get(nums[j]) < map.get(nums[j + 1])) {
-        j++;
-      }
-    }
-
-    if (
-      (!map && nums[i] < nums[j]) ||
-      (map && map.get(nums[i]) < map.get(nums[j]))
-    ) {
-      swap(nums, i, j);
-      i = j;
-    } else {
-      break;
-    }
-  }
-}
 
 /**
  * * 前 K 个高频元素。给定一个非空的整数数组，返回其中出现频率前 k 高的元素。
@@ -126,6 +103,31 @@ function topKFrequent(nums, k) {
 
   return mapKeys.slice(-k).reverse();
 }
+
+function heapifyMax(nums, i, heapSize, map) {
+  for (let j = 2 * i + 1; j < heapSize; j = 2 * j + 1) {
+    if (j + 1 < heapSize) {
+      if (!map && nums[j] < nums[j + 1]) {
+        j++;
+      }
+
+      if (map && map.get(nums[j]) < map.get(nums[j + 1])) {
+        j++;
+      }
+    }
+
+    if (
+      (!map && nums[i] < nums[j]) ||
+      (map && map.get(nums[i]) < map.get(nums[j]))
+    ) {
+      swap(nums, i, j);
+      i = j;
+    } else {
+      break;
+    }
+  }
+}
+
 
 /**
  * * 数据流的中位数。

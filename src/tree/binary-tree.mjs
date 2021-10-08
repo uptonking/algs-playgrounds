@@ -323,6 +323,60 @@ function zigzagLevelOrder2(root) {
 }
 
 /**
+ * * 二叉树的右视图
+ * * 思路：层序遍历，每层只取最右边1个
+ * 想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
+ * https://leetcode-cn.com/problems/binary-tree-right-side-view/
+ * https://github.com/Chocolate1999/leetcode-javascript/issues/51
+ */
+
+function rightSideView(root) {
+  if (!root) return [];
+
+  const ret = [];
+  const queue = [root];
+  let curr = root;
+
+  while (queue.length) {
+    const levelArr = [];
+    const levelSize = queue.length;
+
+    for (let i = 0; i < levelSize; i++) {
+      curr = queue.shift();
+      if (i === levelSize - 1) {
+        ret.push(curr.val);
+      }
+
+      curr.left && queue.push(curr.left);
+      curr.right && queue.push(curr.right);
+    }
+  }
+
+  return ret;
+}
+
+function rightSideView(root) {
+  if (!root) return [];
+
+  const ret = [];
+
+  const level = (node, depth) => {
+    if (!node) return;
+
+    // 每层只保存最右边的元素
+    if (ret.length === depth) ret.push(node.val);
+
+    // 因为每层保存一个，所以从右边开始递归遍历
+    level(node.right, depth + 1);
+    level(node.left, depth + 1);
+  };
+
+  level(root, 0);
+
+  return ret;
+}
+
+/**
  * 二叉树的序列化与反序列化
  * https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/
  * * 基于层序遍历实现序列化，空子节点序列化为 #
