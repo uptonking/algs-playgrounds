@@ -5,12 +5,12 @@ import {
   baselineJsArraySort,
   checkIsArraySorted,
 } from '../utils/sort-utils.mjs';
-import { heapSort, heapSortRecursively } from './sorting/heap-sort.mjs';
+import { heapSort, heapSortRecursive } from './sorting/heap-sort.mjs';
 import {
   mergeSort,
   mergeSort3Way,
   mergeSortInsertForShort,
-  mergeSortRecursively2,
+  mergeSortRecursive2,
 } from './sorting/merge-sort.mjs';
 import {
   quickSort,
@@ -31,9 +31,12 @@ const arr2 = [
   1.4, 1.1, 1.1, 1234, 9999, -999999, 9999.1, 999999999, 123,
 ];
 const arr = randomArray({
+  /**
+   * * 👇🏻️ 修改size可以改变自动生成的测试数组的元素数量
+   */
+  size: 200000,
   min: -999999,
   max: 9999999,
-  size: 20000,
   isDuplicatesAllowed: true,
 });
 
@@ -63,24 +66,24 @@ function execSortTimer(fn) {
 
 // 具有稳定性的算法：insertion, bubble, merge
 
-execSortTimer(baselineFuncReturnOnly);
-execSortTimer(baselineJsArraySort);
-execSortTimer(selectionSort);
-execSortTimer(insertionSort);
-execSortTimer(shellSort);
-execSortTimer(bubbleSort);
+execSortTimer(baselineFuncReturnOnly); // 不执行计算，直接返回参数对象
+execSortTimer(baselineJsArraySort); // api Array.prototype.sort
+execSortTimer(selectionSort); // 选择排序
+execSortTimer(insertionSort); // 插入排序
+execSortTimer(shellSort); // 希尔排序
+execSortTimer(bubbleSort); // 冒泡排序
 
-execSortTimer(quickSort);
-execSortTimer(quickSortOutOfPlace);
-execSortTimer(quickSort3Way);
-execSortTimer(mergeSort);
-execSortTimer(mergeSortRecursively2);
-execSortTimer(mergeSortInsertForShort);
-execSortTimer(mergeSort3Way);
-execSortTimer(heapSort);
-execSortTimer(heapSortRecursively);
+execSortTimer(quickSort); // 快排 原地 递归
+execSortTimer(quickSortOutOfPlace); // 快排 非原地 递归
+execSortTimer(quickSort3Way); // 快排 三路 递归
+execSortTimer(mergeSort); // 归并 非原地 递归
+execSortTimer(mergeSortRecursive2); // 归并 非原地 递归 辅助数组少
+execSortTimer(mergeSortInsertForShort); // 归并 结合插入排序优化
+execSortTimer(mergeSort3Way); // 归并 三路
+execSortTimer(heapSort); // 堆排序 原地 非递归
+execSortTimer(heapSortRecursive); // 堆排序 原地 递归
 
 algsMetrics = quickSortByProperty(algsMetrics, 'time');
 
-console.log('\n---- tests time for sorting algs ----');
+console.log('\n---- tests time for sorting algs (nanoseconds) ----');
 console.table(algsMetrics);

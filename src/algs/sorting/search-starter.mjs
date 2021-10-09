@@ -17,7 +17,7 @@ export function binarySearch(nums, target) {
     }
   }
 
-  return 'not-found';
+  return -1;
 }
 
 export function binarySearchRecursive(nums, target, low, high) {
@@ -38,9 +38,9 @@ export function binarySearchRecursive(nums, target, low, high) {
   }
 
   if (nums[mid] < target) {
-    return binarySearch(nums, target, mid + 1, high);
+    return binarySearchRecursive(nums, target, mid + 1, high);
   } else {
-    return binarySearch(nums, target, low, mid);
+    return binarySearchRecursive(nums, target, low, mid);
   }
 }
 

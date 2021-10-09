@@ -5,7 +5,7 @@ function swap(arr, i, j) {
   arr[j] = temp;
 }
 
-/** 💡️ quickSort排序算法模版，递归版，splice + concat */
+/** 💡️ quickSort排序算法模版，递归版，splice + concat，较快，用空间换时间 */
 export function quickSortOutOfPlace(nums) {
   const len = nums.length;
   if (len <= 1) {
@@ -30,7 +30,7 @@ export function quickSortOutOfPlace(nums) {
 }
 
 /**
- * quickSort排序算法模版，递归版，原地排序
+ * 💡️ quickSort排序算法模版，递归版，原地排序，比非原地排序要慢
  * [用 JavaScript 实现快速排序](https://segmentfault.com/a/1190000037611587)
  */
 export function quickSort(nums, start, end) {
@@ -137,7 +137,7 @@ export function quickSortByProperty(
     return objArr;
   }
 
-  console.log(';;current-arr, ', objArr);
+  // console.log(';;current-arr, ', objArr);
 
   const pivotIndex = Math.floor(objArr.length / 2);
   // 从数组中去掉基准值，并获取这个基准值

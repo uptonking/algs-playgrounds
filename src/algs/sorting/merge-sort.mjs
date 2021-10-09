@@ -37,7 +37,7 @@ function merge(left, right) {
   return [...tempArr, ...left, ...right];
 }
 
-export function mergeSortRecursively2(nums, start, end) {
+export function mergeSortRecursive2(nums, start, end) {
   if (start === undefined) start = 0;
   if (end === undefined) end = nums.length - 1;
 
@@ -45,8 +45,8 @@ export function mergeSortRecursively2(nums, start, end) {
 
   const mid = Math.floor((start + end) / 2);
 
-  mergeSortRecursively2(nums, start, mid);
-  mergeSortRecursively2(nums, mid + 1, end);
+  mergeSortRecursive2(nums, start, mid);
+  mergeSortRecursive2(nums, mid + 1, end);
 
   let l = start;
   let r = mid + 1;
@@ -104,8 +104,8 @@ export function mergeSortInsertForShort(nums, start, end) {
 
   const mid = Math.floor((start + end) / 2);
 
-  mergeSortRecursively2(nums, start, mid);
-  mergeSortRecursively2(nums, mid + 1, end);
+  mergeSortRecursive2(nums, start, mid);
+  mergeSortRecursive2(nums, mid + 1, end);
 
   let l = start;
   let r = mid + 1;
@@ -133,7 +133,7 @@ export function mergeSortInsertForShort(nums, start, end) {
   return nums;
 }
 
-/** 三路归并，递归版 */
+/** 三路归并，递归版，将数组拆分成3等份，然后使用插入排序归并3个数组 */
 export function mergeSort3Way(nums) {
   // after array is broken down, sort the elems using insertion sort and return array
   if (nums.length <= 3) {
@@ -159,7 +159,7 @@ export function mergeSort3Way(nums) {
   arr2 = mergeSort3Way(arr2);
   nums = mergeSort3Way(nums);
 
-  // merge the 3 arrays through insert sort and by shifting the lowest value O( N )
+  // merge the 3 arrays through insert sort and by shifting the lowest value O(N)
   const sortedArr = [];
   for (let i = 0; i < initialSize; i++) {
     if (arr1[0] <= arr2[0] || arr2.length === 0) {
