@@ -1,6 +1,8 @@
 // * 数组扁平化
 
-/** 基于队列 */
+/**
+ * * 基于队列，访问用shift，插入用unshift
+ */
 function flatten(arr) {
   const queue = [...arr];
 

@@ -269,17 +269,17 @@ export function pathSum(root, targetSum) {
 function maxPathSum(root) {
   let maxSum = Number.MIN_SAFE_INTEGER;
 
-  const dfs = (root) => {
-    if (!root) return 0;
+  const dfs = (node) => {
+    if (!node) return 0;
 
-    const left = dfs(root.left); // 左子树提供的最大路径和
-    const right = dfs(root.right); // 右子树提供的最大路径和
+    const left = dfs(node.left); // 左子树提供的最大路径和
+    const right = dfs(node.right); // 右子树提供的最大路径和
 
     // 当前子树内部的最大路径和
-    const innerMaxSum = left + root.val + right;
+    const innerMaxSum = left + node.val + right;
     maxSum = Math.max(maxSum, innerMaxSum); // 挑战最大纪录
 
-    const outputMaxSum = root.val + Math.max(0, left, right); // 当前子树对外提供的最大和
+    const outputMaxSum = node.val + Math.max(0, left, right); // 当前子树对外提供的最大和
 
     // 如果对外提供的路径和为负，直接返回0。否则正常返回
     return outputMaxSum < 0 ? 0 : outputMaxSum;

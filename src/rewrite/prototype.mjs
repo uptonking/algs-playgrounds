@@ -31,7 +31,7 @@ console.log('chd1, ', chd1);
 // 子类继承了父类的属性和方法，同时属性没有被创建在原型链上，因此多个子类不会共享同一个属性。
 // 子类可以传递动态参数给父类！
 // 父类的构造函数只执行了一次！
-// 但是 子类想要在原型上添加方法，必须在继承之后添加，否则将覆盖掉原有原型上的方法。
+// 但是子类想要在原型上添加方法，必须在继承之后添加，否则将覆盖掉原有原型上的方法。
 
 /** 类似Object.create, 可以不用创建父类，直接利用已有实例作为模板 */
 function object(o) {
@@ -93,10 +93,10 @@ function _objectCreate(o) {
  * * 判断A的原型链上是否有B的原型
  * 思路是 在a的原型链a.__proto__上查找 b.prototype
  */
-function _instanceof(a, b) {
-  const bPrototype = b.prototype;
+function _instanceof(obj, Cls) {
+  const bPrototype = Cls.prototype;
 
-  let aProto = Object.getPrototypeOf(a);
+  let aProto = Object.getPrototypeOf(obj);
 
   while (aProto) {
     if (aProto === bPrototype) {
@@ -111,6 +111,7 @@ function _instanceof(a, b) {
 
 /**
  * * 手动实现new创建新对象的过程。
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/71
  * 1. 在内存中创建新对象
  * 2. 新对象内部的[[Prototype]]指向构造函数的原型对象
@@ -125,13 +126,15 @@ function _newObjectFactory(constructor, ...args) {
   // const obj = Object.create(constructor.prototype);
   Object.setPrototypeOf(obj, constructor.prototype);
 
-  const temp = constructor.apply(obj, args);
+  // 将构造函数内部的this绑定到新对象，并执行构造函数
+  const newObj = constructor.apply(obj, args);
 
-  if (temp && ['object', 'function'].includes(typeof temp)) {
-    return temp;
-  }
+  // if (temp && ['object', 'function'].includes(typeof temp)) {
+  //   return temp;
+  // }
 
-  return obj;
+  // return obj;
+  return typeof newObj === 'object' ? newObj : obj;
 }
 
 /**

@@ -85,6 +85,12 @@ function curry(func) {
   };
 }
 
+function curry2(fn, ...args) {
+  return args.length >= fn.length
+    ? fn(...args)
+    : (...args2) => curry2(fn, ...args, ...args2);
+}
+
 function compose(...fns) {
   return (initialVal) => fns.reduceRight((fn1, fn2) => fn2(fn1), initialVal);
 }

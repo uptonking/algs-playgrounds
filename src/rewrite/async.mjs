@@ -18,6 +18,47 @@ function* generator() {
   return num3;
 }
 
+/**
+ * * 接受一个generator函数，然后自动执行迭代，在迭代完成后，返回值
+ */
+function asyncToGenerator(genFn) {
+  return function () {
+    // 调用generator函数 生成迭代器
+    const gen = genFn.apply(this, arguments);
+    return new Promise((resolve, reject) => {
+      /**
+       * * 封装了调用generator的next/throw方法的过程
+       */
+      function step(key, args) {
+        let genResult;
+        try {
+          genResult = gen[key](args);
+        } catch (err) {
+          return reject(err);
+        }
+
+        const { value, done } = genResult;
+
+        if (done) {
+          // 迭代器迭代完成了，才会resolve
+          return resolve(value);
+        } else {
+          // 若未迭代完成，就继续调用next方法
+          return Promise.resolve(value).then(
+            (val) => step('next', val),
+            (err) => step('throw', err),
+          );
+        }
+      }
+
+      /**
+       * * 触发执行generator函数返回值对象的next()方法
+       */
+      step('next');
+    });
+  };
+}
+
 function generatorToAsync2(generator) {
   return function () {
     const gen = generator.apply(this, arguments);

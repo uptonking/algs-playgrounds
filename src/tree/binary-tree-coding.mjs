@@ -54,11 +54,37 @@ function isSameTree(root1, root2) {
 }
 
 /**
- * * 二叉树转链表。展开后的单链表应该与二叉树 先序遍历 顺序相同。
+ * * 二叉树展开为链表。展开后的单链表应该与二叉树 先序遍历 顺序相同。
  * https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/submissions/
- * https://blog.voyz.vip/2020/12/31/LeetCode%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0-Day54/
- *
+ * https://juejin.cn/post/6856411258976600077
  */
+
+function flatten(root) {
+  let curr = root;
+  let left;
+  let temp;
+  while (curr) {
+    // 若左子树非空
+    if (curr.left) {
+      left = curr.left;
+      temp = left;
+      // 找到左子树的最后一个元素，一般是最下方的右叶子
+      while (temp.right) {
+        temp = temp.right;
+      }
+
+      // 将curr的右子树挂到左子树的最下方
+      temp.right = curr.right;
+
+      // 将以前的左子树变为右子树
+      curr.left = null;
+      curr.right = left;
+    }
+
+    curr = curr.right;
+  }
+}
+
 export function flatten(root) {
   if (!root) return null;
 
