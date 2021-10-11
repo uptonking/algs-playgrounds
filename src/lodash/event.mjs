@@ -1,6 +1,6 @@
 /**
  * * 手写发布订阅模式。
- *
+ * * 思路：通过一个调度中心进行处理，使得订阅者和发布者分离开来，互不干扰。
  * https://github.com/sisterAn/JavaScript-Algorithms/issues/110
  */
 class EventEmitter {
@@ -71,3 +71,45 @@ eventEmitter.once('click', cb);
 eventEmitter.emit('click', '2020');
 // hello 2020
 console.log(eventEmitter.listeners);
+
+/**
+ * * 手写观察者模式
+ * * 思路：一个主题持有所有观察者，当主题通知更新时，所有观察者的更新方法会被调用
+ *
+ */
+
+class Observer {
+  constructor(name) {
+    this.name = name;
+  }
+
+  update(newVal) {
+    this.name = newVal;
+    console.log('updated, ', newVal);
+  }
+}
+
+class Subject {
+  constructor() {
+    this.subjects = [];
+  }
+
+  add(observer) {
+    this.subjects.push(observer);
+  }
+
+  notify() {
+    this.subjects.forEach((item) => item.update());
+  }
+}
+
+const sub = new Subject();
+const ob1 = new Observer('ob1');
+const ob2 = new Observer('ob2');
+
+// 观察者订阅目标
+sub.add(ob1);
+sub.add(ob2);
+
+// 目标触发事件
+sub.notify();

@@ -89,6 +89,58 @@ const asyncFn2 = generatorToAsync2(generator);
 asyncFn2().then((res) => console.log(res));
 
 /**
+ * * 手写 axios
+ * axios.get(url,options).then(res=>res)
+ * onreadystatechange: An event handler that is called whenever the readyState attribute changes.
+ * onload: called when an XML transaction completes successfully.
+ * readyState: 0-UNSENT, 1-OPENED, 2-HEADERS-RECEIVED, 3-LOADING, 4-DONE
+ */
+
+function get(url, options) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+
+    xhr.onload = function () {
+      console.log(xhr.responseText);
+      resolve(xhr.responseText);
+    };
+
+    xhr.onerror = function () {
+      reject(new Error('error occurred during xhr'));
+    };
+
+    xhr.send(options.data);
+  });
+}
+
+/**
+ * * 手写 axios
+ * https://github.com/sisterAn/JavaScript-Algorithms/issues/104
+ */
+
+```js
+ axios({
+   method:'get',
+   url:'http://bit.ly/2mTM3nY',
+   responseType:'stream'
+ })
+   .then(function(response) {
+   response.data.pipe(fs.createWriteStream('ada_lovelace.jpg'))
+ });
+
+
+ axios.get('/api/user', {
+   cancelToken: source.token
+ }).catch(function(thrown) {
+   if (axios.isCancel(thrown)) {
+     console.log('请求撤销了', thrown.message);
+   } else {
+   }
+ });
+ ```;
+
+/**
  * * 手写 setTimeout，思路是基于 `requestAnimationFrame` 和计算时间差实现
  * `Date.now()` method returns the number of milliseconds elapsed since 1970-01-01T00:00:00Z.
  */
@@ -137,3 +189,37 @@ function showName() {
   console.log('Hello');
 }
 const timerID = _setTimeout(showName, 1800);
+
+/**
+ * * 手写jsonp
+ * * 思路：拼接querystring(以?或&开头)，动态创建script标签，将回调函数名挂载到window，然后appendChild(script)
+ * https://juejin.cn/post/6947694608247685127
+ * - JSONP只支持GET请求，CORS支持所有类型的HTTP请求。JSONP的优势在于支持老式浏览器，以及可以向不支持CORS的网站请求数据。
+ */
+function jsonp(url, params, callback) {
+  // 判断是否已有参数
+  let queryString = url.indexOf('?') ? '?' : '&';
+  // 拼接参数
+  for (const item in params) {
+    if (params.hasOwnProperty(item)) {
+      queryString += `${item}=${params[item]}&`;
+    }
+  }
+
+  // 为cb拼接随机token（可省略）
+  const token = Math.random().toString().replace('.', '');
+  const cbName = 'jsonpCb' + token;
+  queryString += `callback=${cbName}`;
+
+  // 添加标签
+  const script = document.createElement('script');
+  script.src = url + queryString;
+
+  // 包装回调执行逻辑
+  window[cbName] = function (response) {
+    callback.apply(this, response);
+    document.removeChild(script);
+  };
+
+  document.appendChild(script);
+}
