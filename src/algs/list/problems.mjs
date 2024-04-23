@@ -284,7 +284,7 @@ function deleteDuplicates(head) {
  * - 然后修改指针指向，将重复元素段移除。
  * https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/comments/
  */
- function deleteDuplicates(head) {
+function deleteDuplicates(head) {
   if (!head || !head.next) return head;
 
   let linkHead = head;

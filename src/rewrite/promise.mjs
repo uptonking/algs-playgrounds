@@ -44,7 +44,7 @@ Promise2.all1 = (promises) => {
  * - 当 promise 被 reject 之后，我们不会直接 reject ，而是记录下该 reject 的值和对应的状态 'rejected'
  * - 当所有promise对象都已执行（解决或拒绝），再统一 resolve 所有的 promise 执行结果数组
  */
-  Promise.allSettled1 = function (promises) {
+Promise.allSettled1 = function (promises) {
   return new Promise((resolve, reject) => {
     const result = [];
     const len = promises.length;

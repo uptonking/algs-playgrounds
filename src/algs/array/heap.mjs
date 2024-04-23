@@ -67,7 +67,6 @@ function findKthLargest(nums, k) {
   return nums[len - k];
 }
 
-
 /**
  * * 前 K 个高频元素。给定一个非空的整数数组，返回其中出现频率前 k 高的元素。
  * https://leetcode-cn.com/problems/top-k-frequent-elements/
@@ -127,7 +126,6 @@ function heapifyMax(nums, i, heapSize, map) {
     }
   }
 }
-
 
 /**
  * * 数据流的中位数。

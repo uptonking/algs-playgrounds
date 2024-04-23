@@ -462,10 +462,9 @@ function isPalindrome(head) {
  * * 重排链表
  * https://juejin.cn/post/7002949115776598023
  */
- function reorderList(head) {
+function reorderList(head) {
   const list = []; // 使用数组存储链表
   let node = head; // 使用node遍历链表
-
 
   // 遍历链表，将每个元素依次存入数组
   while (node) {
@@ -477,7 +476,6 @@ function isPalindrome(head) {
   let i = 0; // 使用i指针从头往后遍历list
   let j = list.length - 1; // 使用j指针从后往前遍历list
 
-
   // 左右指针不断向中间移动，知道相遇
   while (i <= j) {
     // 将i、j指向的元素，依次存入newList
@@ -485,7 +483,6 @@ function isPalindrome(head) {
   }
 
   let newNode = newList[0]; // 缓存新链表的头节点
-
 
   // newList的每个元素，就是新链表的每个节点
   for (let i = 1; i < newList.length; i++) {

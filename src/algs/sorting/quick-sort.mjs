@@ -5,7 +5,10 @@ function swap(arr, i, j) {
   arr[j] = temp;
 }
 
-/** 💡️ quickSort排序算法模版，递归版，splice + concat，较快，用空间换时间 */
+/** 💡️ quickSort排序算法模版，递归版，
+ * - 思路是递归将数组根据pivot值等分为2个小数组[...smaller, pivot, ...bigger]
+ * - splice + concat，较快，用空间换时间
+ */
 export function quickSortOutOfPlace(nums) {
   const len = nums.length;
   if (len <= 1) {

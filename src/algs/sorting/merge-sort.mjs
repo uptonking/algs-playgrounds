@@ -7,7 +7,9 @@ function swap(arr, i, j) {
   arr[j] = temp;
 }
 
-/** 💡️ mergeSort 排序算法模版，递归版 */
+/** 💡️ mergeSort 排序算法模版，递归版
+ * - 思路是先递归将数组从中间索引位置等分为2个小数组，然后从底层两两合并
+ */
 export function mergeSort(nums) {
   const len = nums.length;
   if (len <= 1) {

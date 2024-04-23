@@ -79,10 +79,8 @@ function searchRange(nums, target) {
     if (nums[mid] === target) {
       let start = mid;
       let end = mid;
-      while (nums[start] === target)
-        start--;
-      while (nums[end] === target)
-        end++;
+      while (nums[start] === target) start--;
+      while (nums[end] === target) end++;
 
       return [start + 1, end - 1];
     }
